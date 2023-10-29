@@ -9,7 +9,7 @@ import {
   Input,
   Button,
 } from "reactstrap";
-// import network from "../../assets/network.png";
+
 import displaySignIn from "../../../assets/displaySignIn.png";
 const SignIn = () => {
   return (

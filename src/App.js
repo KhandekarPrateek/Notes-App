@@ -1,8 +1,12 @@
-import logo from "./logo.svg";
 import "./App.css";
+import Sign from "./pages/Sign-in";
 
 function App() {
-  return <div>hi</div>;
+  return (
+    <div>
+      <Sign />
+    </div>
+  );
 }
 
 export default App;

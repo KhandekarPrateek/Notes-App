@@ -9,9 +9,14 @@ import {
   Input,
   Button,
 } from "reactstrap";
-
+import { useNavigate } from "react-router-dom";
 import displaySignIn from "../../../assets/displaySignIn.png";
 const SignIn = () => {
+  const navigate = useNavigate();
+
+  const routeTosignUp = () => {
+    navigate("/signup");
+  };
   return (
     <Container className="container-signin" fluid>
       <Row className="h-100 w-100">
@@ -54,7 +59,11 @@ const SignIn = () => {
                 </Row>
               </div>
               <div className=" justify-content-center d-flex">
-                <Button className="button-signup mt-4" outline>
+                <Button
+                  className="button-signup mt-4"
+                  outline
+                  onClick={routeTosignUp}
+                >
                   {" "}
                   Sign-up
                 </Button>

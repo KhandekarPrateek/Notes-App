@@ -9,9 +9,13 @@ import {
   Input,
   Button,
 } from "reactstrap";
-
+import { useNavigate } from "react-router";
 import displaySignIn from "../../../assets/displaySignIn.png";
 const SignUp = () => {
+  const navigate = useNavigate();
+  const routeTosignIn = () => {
+    navigate("/signin");
+  };
   return (
     <Container className="container-signin" fluid>
       <Row className="h-100 w-100">
@@ -21,7 +25,7 @@ const SignUp = () => {
         >
           <div className="w-100">
             <Row>
-              <h2 className="m-5">Sign up to your account</h2>
+              <h2 className="m-5">Sign up to create your new account</h2>
             </Row>
             <Row>
               <Form>
@@ -41,7 +45,7 @@ const SignUp = () => {
                     type="password"
                     name="password"
                     id="examplePassword"
-                    placeholder="password "
+                    placeholder="Set password "
                   />
                 </FormGroup>
                 <FormGroup className="m-5">
@@ -50,13 +54,23 @@ const SignUp = () => {
                     type="password"
                     name="password"
                     id="examplePassword"
-                    placeholder="password "
+                    placeholder=" Confirm password "
                   />
                 </FormGroup>
               </Form>
               <div className=" justify-content-center d-flex">
                 <Row>
-                  <Button className="button-signin mt-4">Sign-in</Button>
+                  <Button className="button-signin mt-4">Create Account</Button>
+                </Row>
+              </div>
+              <div className=" justify-content-center d-flex ">
+                <Row>
+                  <Button
+                    className="button-signin mt-4 "
+                    onClick={routeTosignIn}
+                  >
+                    Sign In
+                  </Button>
                 </Row>
               </div>
             </Row>

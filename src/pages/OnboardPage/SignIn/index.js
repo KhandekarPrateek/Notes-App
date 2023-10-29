@@ -10,8 +10,8 @@ import {
   Button,
 } from "reactstrap";
 // import network from "../../assets/network.png";
-import displaySignIn from "../../assets/displaySignIn.png";
-const signIn = () => {
+import displaySignIn from "../../../assets/displaySignIn.png";
+const SignIn = () => {
   return (
     <Container className="container-signin" fluid>
       <Row className="h-100 w-100">
@@ -73,4 +73,4 @@ const signIn = () => {
   );
 };
 
-export default signIn;
+export default SignIn;

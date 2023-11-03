@@ -26,24 +26,24 @@ const DashBoard = () => {
     <div>
       <Navbar color="dark" light expand="md" dark>
         <NavbarBrand href="/">
-          <GiNotebook size={35} />
+          <GiNotebook size={35} className="mx-3" />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="ml-auto align-items-end" navbar>
-            <div className="d-flex justify-row ">
-              <NavItem>
-                <NavLink href="/profile">
-                  <CgProfile size={30} />
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/signin">
-                  <GoSignOut size={30} />
-                </NavLink>
-              </NavItem>
-              <NavbarText>Powered by firebase</NavbarText>
-            </div>
+        <Collapse isOpen={isOpen} navbar className="navbar-text">
+          <Nav className="ml-auto " navbar>
+            <NavItem>
+              <NavLink href="/profile">
+                <CgProfile size={30} className="mx-3" />
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink href="/signin">
+                <GoSignOut size={30} className="mx-3" />
+              </NavLink>
+            </NavItem>
+            <NavbarText className="mx-3">
+              <h5>Powered By Firebase</h5>
+            </NavbarText>
           </Nav>
         </Collapse>
       </Navbar>

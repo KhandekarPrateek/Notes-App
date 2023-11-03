@@ -1,3 +1,6 @@
 .dashboard-container {
   height: 100vh;
 }
+.navbar-text {
+  justify-content: end;
+}

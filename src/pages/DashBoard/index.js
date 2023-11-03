@@ -29,6 +29,9 @@ const DashBoard = () => {
           <GiNotebook size={35} className="mx-3" />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
+        <NavbarText>
+          <h5>Note name</h5>
+        </NavbarText>
         <Collapse isOpen={isOpen} navbar className="navbar-text">
           <Nav className="ml-auto " navbar>
             <NavItem>

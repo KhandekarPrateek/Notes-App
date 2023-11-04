@@ -11,11 +11,22 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import displaySignIn from "../../../assets/displaySignIn.png";
+import { signInwithGooglePopup } from "../../../utils/firebase/firebase";
 const SignIn = () => {
   const navigate = useNavigate();
 
   const routeTosignUp = () => {
     navigate("/signup");
+  };
+
+  const navigateToDashboard = (response) => {
+    response._tokenResponse.emailVerified
+      ? navigate("/dashboard")
+      : console.log("error");
+  };
+  const logWithGoogleUser = async () => {
+    const response = await signInwithGooglePopup();
+    navigateToDashboard(response);
   };
   return (
     <Container className="container-signin" fluid>
@@ -55,7 +66,12 @@ const SignIn = () => {
               </Form>
               <div className=" justify-content-center d-flex">
                 <Row>
-                  <Button className="button-signin mt-4">Sign-in</Button>
+                  <Button
+                    className="button-signin mt-4"
+                    onClick={logWithGoogleUser}
+                  >
+                    Sign-in
+                  </Button>
                 </Row>
               </div>
               <div className=" justify-content-center d-flex">

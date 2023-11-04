@@ -31,6 +31,14 @@ const SignUp = () => {
               <Form>
                 {" "}
                 <FormGroup className="m-5">
+                  <Label>Name</Label>
+                  <Input id="name" name="name" placeholder="Name" />
+                </FormGroup>
+                <FormGroup className="m-5">
+                  <Label>Surname</Label>
+                  <Input id="surname" name="surname" placeholder="Surname" />
+                </FormGroup>
+                <FormGroup className="m-5">
                   <Label for="exampleEmail">Email</Label>
                   <Input
                     type="email"
@@ -40,20 +48,20 @@ const SignUp = () => {
                   />
                 </FormGroup>
                 <FormGroup className="m-5">
-                  <Label for="examplePassword">Create Password</Label>
+                  <Label for="SetPassword">Create Password</Label>
                   <Input
                     type="password"
                     name="password"
-                    id="examplePassword"
+                    id="SetPassword"
                     placeholder="Set password "
                   />
                 </FormGroup>
                 <FormGroup className="m-5">
-                  <Label for="examplePassword">Confirm Password</Label>
+                  <Label for="ConfirmPassword">Confirm Password</Label>
                   <Input
                     type="password"
                     name="password"
-                    id="examplePassword"
+                    id="ConfirmPassword"
                     placeholder=" Confirm password "
                   />
                 </FormGroup>

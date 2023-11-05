@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   Col,
   Container,
@@ -12,6 +13,21 @@ import {
 import { useNavigate } from "react-router";
 import displaySignIn from "../../../assets/displaySignIn.png";
 const SignUp = () => {
+  const defaultFormField = {
+    Name: "",
+    surname: "",
+    email: "",
+    setPassword: "",
+    ConfirmPassword: "",
+  };
+  const [formField, setFormField] = useState(defaultFormField);
+  const { Name, surname, email, setPassword, ConfirmPassword } = formField;
+  // NOtes:the value and state are circular i.e if value changes state changes and state change tells what to display
+  console.log(formField, "formfiled");
+  const handleFormFieldChange = (event) => {
+    const { name, value } = event.target;
+    setFormField({ ...formField, [name]: value });
+  };
   const navigate = useNavigate();
   const routeTosignIn = () => {
     navigate("/signin");
@@ -30,13 +46,26 @@ const SignUp = () => {
             <Row>
               <Form>
                 {" "}
+                {/* Note the name attribute means what the particular form input corresponds to for state use */}
                 <FormGroup className="m-5">
                   <Label>Name</Label>
-                  <Input id="name" name="name" placeholder="Name" />
+                  <Input
+                    id="name"
+                    name="Name"
+                    placeholder="Name"
+                    value={Name}
+                    onChange={handleFormFieldChange}
+                  />
                 </FormGroup>
                 <FormGroup className="m-5">
                   <Label>Surname</Label>
-                  <Input id="surname" name="surname" placeholder="Surname" />
+                  <Input
+                    id="surname"
+                    name="surname"
+                    placeholder="Surname"
+                    value={surname}
+                    onChange={handleFormFieldChange}
+                  />
                 </FormGroup>
                 <FormGroup className="m-5">
                   <Label for="exampleEmail">Email</Label>
@@ -45,24 +74,30 @@ const SignUp = () => {
                     name="email"
                     id="exampleEmail"
                     placeholder="Email"
+                    value={email}
+                    onChange={handleFormFieldChange}
                   />
                 </FormGroup>
                 <FormGroup className="m-5">
                   <Label for="SetPassword">Create Password</Label>
                   <Input
                     type="password"
-                    name="password"
-                    id="SetPassword"
+                    name="setPassword"
+                    id="setPassword"
                     placeholder="Set password "
+                    value={setPassword}
+                    onChange={handleFormFieldChange}
                   />
                 </FormGroup>
                 <FormGroup className="m-5">
                   <Label for="ConfirmPassword">Confirm Password</Label>
                   <Input
                     type="password"
-                    name="password"
+                    name="ConfirmPassword"
                     id="ConfirmPassword"
                     placeholder=" Confirm password "
+                    value={ConfirmPassword}
+                    onChange={handleFormFieldChange}
                   />
                 </FormGroup>
               </Form>

@@ -76,7 +76,7 @@ const SignIn = () => {
                     className="button-signin mt-4"
                     onClick={logWithGoogleUser}
                   >
-                    Sign-in
+                    Google sign in
                   </Button>
                 </Row>
               </div>

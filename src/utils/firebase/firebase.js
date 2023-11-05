@@ -1,10 +1,5 @@
 import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  signInWithPopup,
-  signInWithRedirect,
-  GoogleAuthProvider,
-} from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 import {
   getFirestore,
@@ -31,8 +26,10 @@ const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
   prompt: "select_account",
 });
+//auth keeps track of all authentication states of all methods
 export const auth = getAuth();
 export const signInwithGooglePopup = () => signInWithPopup(auth, provider);
+
 //the entire code snippet below stores our user info to the db
 //now setting up our database by creating its instance
 export const db = getFirestore();

@@ -1,6 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromUserAuth,
+} from "../../../utils/firebase/firebase";
+import {
   Col,
   Container,
   Form,
@@ -24,9 +28,34 @@ const SignUp = () => {
   const { Name, surname, email, setPassword, ConfirmPassword } = formField;
   // NOtes:the value and state are circular i.e if value changes state changes and state change tells what to display
   console.log(formField, "formfiled");
+  const clearFormFields = () => {
+    setFormField(defaultFormField);
+  };
   const handleFormFieldChange = (event) => {
     const { name, value } = event.target;
     setFormField({ ...formField, [name]: value });
+  };
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    // const { Name, surname, email, setPassword, ConfirmPassword } = event;
+    if (setPassword !== ConfirmPassword) {
+      alert("passwords donot match");
+      return;
+    }
+    try {
+      const { user } = await createAuthUserWithEmailAndPassword(
+        email,
+        setPassword
+      );
+      await createUserDocumentFromUserAuth(user, { Name });
+      clearFormFields();
+    } catch (error) {
+      if (error.code === "auth/email-already-in-use") {
+        alert("cannot create account with same email!!");
+      } else {
+        console.log(error, "user creation unsucessful");
+      }
+    }
   };
   const navigate = useNavigate();
   const routeTosignIn = () => {
@@ -103,7 +132,12 @@ const SignUp = () => {
               </Form>
               <div className=" justify-content-center d-flex">
                 <Row>
-                  <Button className="button-signin mt-4">Create Account</Button>
+                  <Button
+                    className="button-signin mt-4"
+                    onClick={handleFormSubmit}
+                  >
+                    Create Account
+                  </Button>
                 </Row>
               </div>
               <div className=" justify-content-center d-flex ">

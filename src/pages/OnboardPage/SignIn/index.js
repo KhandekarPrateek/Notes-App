@@ -11,7 +11,10 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import displaySignIn from "../../../assets/displaySignIn.png";
-import { signInwithGooglePopup } from "../../../utils/firebase/firebase";
+import {
+  signInwithGooglePopup,
+  createUserDocumentFromUserAuth,
+} from "../../../utils/firebase/firebase";
 const SignIn = () => {
   const navigate = useNavigate();
 
@@ -25,8 +28,11 @@ const SignIn = () => {
       : console.log("error");
   };
   const logWithGoogleUser = async () => {
-    const response = await signInwithGooglePopup();
-    navigateToDashboard(response);
+    // const response = await signInwithGooglePopup();
+    const { user } = await signInwithGooglePopup();
+
+    // navigateToDashboard(response);
+    const createUserRef = await createUserDocumentFromUserAuth(user);
   };
   return (
     <Container className="container-signin" fluid>

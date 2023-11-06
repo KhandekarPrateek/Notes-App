@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   Col,
   Container,
@@ -14,8 +15,21 @@ import displaySignIn from "../../../assets/displaySignIn.png";
 import {
   signInwithGooglePopup,
   createUserDocumentFromUserAuth,
+  signInUserWithEmailAndPassword,
 } from "../../../utils/firebase/firebase";
 const SignIn = () => {
+  const defaultFormFields = {
+    email: "",
+    password: "",
+  };
+  const [formFieldsSignIn, setFormFieldsSignIn] = useState(defaultFormFields);
+  const { email, password } = formFieldsSignIn;
+  const handleChangeSignIn = (event) => {
+    const { name, value } = event.target;
+    setFormFieldsSignIn({ ...formFieldsSignIn, [name]: value });
+  };
+
+  console.log(formFieldsSignIn);
   const navigate = useNavigate();
 
   const routeTosignUp = () => {
@@ -32,7 +46,26 @@ const SignIn = () => {
     const { user } = await signInwithGooglePopup();
 
     // navigateToDashboard(response);
-    const createUserRef = await createUserDocumentFromUserAuth(user);
+    await createUserDocumentFromUserAuth(user);
+  };
+  const clearFormFields = () => {
+    setFormFieldsSignIn(defaultFormFields);
+  };
+  const handleEmailAndPasswordSignIn = async (event) => {
+    event.preventDefault();
+    console.log("hi");
+    try {
+      console.log("hello");
+      const response = await signInUserWithEmailAndPassword(email, password);
+      console.log(response, "response");
+
+      clearFormFields();
+    } catch (error) {
+      if (error.message === "auth/invalid-login-credentials") {
+        alert("enter correct id or password");
+      }
+      console.log(error, "error");
+    }
   };
   return (
     <Container className="container-signin" fluid>
@@ -55,15 +88,19 @@ const SignIn = () => {
                     name="email"
                     id="exampleEmail"
                     placeholder="Email"
+                    // value={email}
+                    onChange={handleChangeSignIn}
                   />
                 </FormGroup>
                 <FormGroup className="m-5">
-                  <Label for="examplePassword">Password</Label>
+                  <Label for="password">Password</Label>
                   <Input
                     type="password"
                     name="password"
-                    id="examplePassword"
+                    id="password"
                     placeholder="password "
+                    // value={password}
+                    onChange={handleChangeSignIn}
                   />
                 </FormGroup>
                 <h6 className="justify-content-end d-flex mt-2">
@@ -80,16 +117,30 @@ const SignIn = () => {
                   </Button>
                 </Row>
               </div>
-              <div className=" justify-content-center d-flex">
-                <Button
-                  className="button-signup mt-4"
-                  outline
-                  onClick={routeTosignUp}
-                >
-                  {" "}
-                  Sign-up
-                </Button>
-              </div>
+              <Row>
+                <div className=" justify-content-center d-flex">
+                  <Button
+                    className="button-signup mt-4"
+                    outline
+                    onClick={handleEmailAndPasswordSignIn}
+                  >
+                    {" "}
+                    Sign-in
+                  </Button>
+                </div>
+              </Row>
+              <Row>
+                <div className=" justify-content-center d-flex">
+                  <Button
+                    className="button-signup mt-4"
+                    outline
+                    onClick={routeTosignUp}
+                  >
+                    {" "}
+                    Sign-up
+                  </Button>
+                </div>
+              </Row>
             </Row>
           </div>
         </Col>

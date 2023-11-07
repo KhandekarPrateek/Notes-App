@@ -35,34 +35,41 @@ const SignIn = () => {
   const routeTosignUp = () => {
     navigate("/signup");
   };
+  const routeToDashboard = () => {
+    navigate("/dashboard");
+  };
 
-  const navigateToDashboard = (response) => {
-    response._tokenResponse.emailVerified
-      ? navigate("/dashboard")
-      : console.log("error");
+  const navigateToDashboard = (user) => {
+    user.emailVerified ? routeToDashboard() : console.log("error");
   };
   const logWithGoogleUser = async () => {
     // const response = await signInwithGooglePopup();
     const { user } = await signInwithGooglePopup();
-
+    console.log(user);
     // navigateToDashboard(response);
     await createUserDocumentFromUserAuth(user);
+    navigateToDashboard(user);
   };
   const clearFormFields = () => {
     setFormFieldsSignIn(defaultFormFields);
   };
   const handleEmailAndPasswordSignIn = async (event) => {
     event.preventDefault();
-    console.log("hi");
+
     try {
-      console.log("hello");
       const response = await signInUserWithEmailAndPassword(email, password);
       console.log(response, "response");
+      if (response) {
+        routeToDashboard();
+      }
 
       clearFormFields();
     } catch (error) {
-      if (error.message === "auth/invalid-login-credentials") {
-        alert("enter correct id or password");
+      if (error.code === "auth/invalid-login-credentials") {
+        alert("enter correct password");
+      }
+      if (error.code === "auth/popup-closed-by-user") {
+        alert("Sign in via gmail or sign up otherwise");
       }
       console.log(error, "error");
     }
@@ -110,6 +117,7 @@ const SignIn = () => {
               <div className=" justify-content-center d-flex">
                 <Row>
                   <Button
+                    type="button"
                     className="button-signin mt-4"
                     onClick={logWithGoogleUser}
                   >

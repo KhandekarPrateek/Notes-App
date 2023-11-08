@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Col,
@@ -10,12 +10,13 @@ import {
   Input,
   Button,
 } from "reactstrap";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import displaySignIn from "../../../assets/displaySignIn.png";
 import {
   signInwithGooglePopup,
   createUserDocumentFromUserAuth,
   signInUserWithEmailAndPassword,
+  getData,
 } from "../../../utils/firebase/firebase";
 const SignIn = () => {
   const defaultFormFields = {
@@ -37,6 +38,7 @@ const SignIn = () => {
   };
 
   const routeToDashboard = (dashboardName) => {
+    console.log(dashboardName, "dashboardName");
     navigate(`/dashboard/${dashboardName}`);
   };
 
@@ -45,10 +47,8 @@ const SignIn = () => {
     emailVerified ? routeToDashboard(displayName) : console.log("error");
   };
   const logWithGoogleUser = async () => {
-    // const response = await signInwithGooglePopup();
     const { user } = await signInwithGooglePopup();
     console.log(user);
-    // navigateToDashboard(response);
     await createUserDocumentFromUserAuth(user);
     navigateToDashboard(user);
   };
@@ -61,8 +61,12 @@ const SignIn = () => {
     try {
       const response = await signInUserWithEmailAndPassword(email, password);
       console.log(response, "response");
-      if (response) {
-        routeToDashboard();
+      const response2 = await getData(response.user.uid);
+      console.log(response2.Name, "response2");
+      if (response2.Name) {
+        routeToDashboard(response2.Name);
+      } else {
+        console.log("Cant access your data");
       }
 
       clearFormFields();
@@ -89,7 +93,6 @@ const SignIn = () => {
             </Row>
             <Row>
               <Form>
-                {" "}
                 <FormGroup className="m-5">
                   <Label for="exampleEmail">Email</Label>
                   <Input

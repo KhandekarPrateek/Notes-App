@@ -10,7 +10,7 @@ import {
   Input,
   Button,
 } from "reactstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import displaySignIn from "../../../assets/displaySignIn.png";
 import {
   signInwithGooglePopup,
@@ -35,12 +35,14 @@ const SignIn = () => {
   const routeTosignUp = () => {
     navigate("/signup");
   };
-  const routeToDashboard = () => {
-    navigate("/dashboard");
+
+  const routeToDashboard = (dashboardName) => {
+    navigate(`/dashboard/${dashboardName}`);
   };
 
   const navigateToDashboard = (user) => {
-    user.emailVerified ? routeToDashboard() : console.log("error");
+    const { emailVerified, displayName } = user;
+    emailVerified ? routeToDashboard(displayName) : console.log("error");
   };
   const logWithGoogleUser = async () => {
     // const response = await signInwithGooglePopup();

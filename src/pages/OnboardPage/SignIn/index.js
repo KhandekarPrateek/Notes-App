@@ -47,10 +47,16 @@ const SignIn = () => {
     emailVerified ? routeToDashboard(displayName) : console.log("error");
   };
   const logWithGoogleUser = async () => {
-    const { user } = await signInwithGooglePopup();
-    console.log(user);
-    await createUserDocumentFromUserAuth(user);
-    navigateToDashboard(user);
+    try {
+      const { user } = await signInwithGooglePopup();
+      console.log(user);
+      await createUserDocumentFromUserAuth(user);
+      navigateToDashboard(user);
+    } catch (error) {
+      if (error.code === "auth/popup-closed-by-user") {
+        alert("google popup faiilure");
+      }
+    }
   };
   const clearFormFields = () => {
     setFormFieldsSignIn(defaultFormFields);

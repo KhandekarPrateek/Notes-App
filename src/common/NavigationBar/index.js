@@ -1,36 +1,52 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { GiNotebook } from "react-icons/gi";
-import { GoSignOut } from "react-icons/go";
-import { CgProfile } from "react-icons/cg";
+import { PiSignOut } from "react-icons/pi";
+import { VscAccount } from "react-icons/vsc";
 
 import {
   Container,
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
   NavbarText,
+  Button,
 } from "reactstrap";
 import { useLocation } from "react-router";
+import { UserContext } from "../../context/context";
+import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
+  const { currentUser } = useContext(UserContext);
+
+  console.log(currentUser, "currentUser from navbar");
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const routeToDashboard = () => {
+    navigate(`/dashboard/${currentUser}`);
+  };
+  const routeToProfile = () => {
+    navigate(`/profile/${currentUser}`);
+  };
+
   return (
     <>
       <Container fluid>
         <Navbar color="dark" light expand="md" dark>
-          <NavbarBrand href="/dashboard">
-            <GiNotebook size={35} className="mx-3" />
-          </NavbarBrand>
+          <GiNotebook
+            size={35}
+            className="mx-3 text-light cursor-pointer"
+            onClick={routeToDashboard}
+          />
           <NavbarToggler onClick={toggle} />
-          {location.pathname === "/dashboard" ? (
+          {location.pathname === `/dashboard/${currentUser}` ? (
             <NavbarText>
               <h5>Note name</h5>
             </NavbarText>
@@ -43,13 +59,15 @@ const NavigationBar = () => {
           <Collapse isOpen={isOpen} navbar className="navbar-text">
             <Nav className="ml-auto " navbar>
               <NavItem>
-                <NavLink href="/profile">
-                  <CgProfile size={30} className="mx-3" />
-                </NavLink>
+                <VscAccount
+                  size={35}
+                  className="mt-2 text-light"
+                  onClick={routeToProfile}
+                />
               </NavItem>
               <NavItem>
                 <NavLink href="/signin">
-                  <GoSignOut size={30} className="mx-3" />
+                  <PiSignOut size={35} className="mx-3" />
                 </NavLink>
               </NavItem>
             </Nav>

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
+import { useState, useContext } from "react";
 import {
   Col,
   Container,
@@ -18,6 +18,7 @@ import {
   signInUserWithEmailAndPassword,
   getData,
 } from "../../../utils/firebase/firebase";
+import { UserContext } from "../../../context/context";
 const SignIn = () => {
   const defaultFormFields = {
     email: "",
@@ -30,7 +31,7 @@ const SignIn = () => {
     setFormFieldsSignIn({ ...formFieldsSignIn, [name]: value });
   };
 
-  console.log(formFieldsSignIn);
+  // console.log(formFieldsSignIn);
   const navigate = useNavigate();
 
   const routeTosignUp = () => {
@@ -38,7 +39,7 @@ const SignIn = () => {
   };
 
   const routeToDashboard = (dashboardName) => {
-    console.log(dashboardName, "dashboardName");
+    // console.log(dashboardName, "dashboardName");
     navigate(`/dashboard/${dashboardName}`);
   };
 
@@ -46,11 +47,16 @@ const SignIn = () => {
     const { emailVerified, displayName } = user;
     emailVerified ? routeToDashboard(displayName) : console.log("error");
   };
+  const { setCurrentUser } = useContext(UserContext);
+
   const logWithGoogleUser = async () => {
     try {
       const { user } = await signInwithGooglePopup();
       console.log(user);
       await createUserDocumentFromUserAuth(user);
+      console.log(user.displayName, "display name");
+      setCurrentUser(user.displayName);
+
       navigateToDashboard(user);
     } catch (error) {
       if (error.code === "auth/popup-closed-by-user") {
@@ -61,15 +67,18 @@ const SignIn = () => {
   const clearFormFields = () => {
     setFormFieldsSignIn(defaultFormFields);
   };
+
   const handleEmailAndPasswordSignIn = async (event) => {
     event.preventDefault();
 
     try {
       const response = await signInUserWithEmailAndPassword(email, password);
-      console.log(response, "response");
+
       const response2 = await getData(response.user.uid);
-      console.log(response2.Name, "response2");
+
       if (response2.Name) {
+        setCurrentUser(response2.Name);
+        console.log(response2.Name, "name from email and password");
         routeToDashboard(response2.Name);
       } else {
         console.log("Cant access your data");

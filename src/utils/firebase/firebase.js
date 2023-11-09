@@ -84,7 +84,7 @@ export const signInUserWithEmailAndPassword = async (email, password) => {
 
 export const getData = async (uid) => {
   const db = getFirestore(app);
-  const docRef = doc(db, "users", uid); // Replace 'yourCollection' and 'yourDocumentId' with actual values
+  const docRef = doc(db, "users", uid);
   try {
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {

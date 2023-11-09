@@ -27,7 +27,7 @@ const SignUp = () => {
   const [formField, setFormField] = useState(defaultFormField);
   const { Name, surname, email, setPassword, ConfirmPassword } = formField;
   // NOtes:the value and state are circular i.e if value changes state changes and state change tells what to display
-  console.log(formField, "formfiled");
+  // console.log(formField, "formfiled");
   const clearFormFields = () => {
     setFormField(defaultFormField);
   };

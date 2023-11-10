@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Col,
   Container,
@@ -8,15 +8,35 @@ import {
   Label,
   Input,
   Button,
-  FormText,
 } from "reactstrap";
 import profile from "../../assets/profile.png";
 import NavigationBar from "../../common/NavigationBar";
 import { UserContext } from "../../context/context";
 import UserInfo from "./UserInfo";
+import { createNewPassword } from "../../utils/firebase/firebase";
 
 const Profile = () => {
   const { currentUser } = useContext(UserContext);
+  const defaultPassword = {
+    setPassword: "",
+    confirmPassword: "",
+  };
+  const [passwordField, setPasswordField] = useState(defaultPassword);
+  const { setPassword, confirmPassword } = passwordField;
+
+  const handlePasswordChangeSignIn = (event) => {
+    const { name, value } = event.target;
+    setPasswordField({ ...passwordField, [name]: value });
+  };
+  console.log(passwordField);
+  const handlePasswordChange = () => {
+    if (setPassword === confirmPassword) {
+      console.log("proceed to change ");
+      createNewPassword(setPassword);
+    } else {
+      console.log(" passwords donot match");
+    }
+  };
 
   return (
     <>
@@ -33,38 +53,34 @@ const Profile = () => {
 
               <UserInfo info={currentUser.displayName} title={"Name"} />
               <UserInfo info={currentUser.email} title={"Email"} />
-              {/* <UserInfo info={currentUser.displayName}  title={Name}/> */}
 
               <Form>
                 <h3 className="m-5">Change password</h3>
+
                 <FormGroup className="m-5">
-                  <Label for="SetPassword">Old Password</Label>
+                  <Label for="setPassword">Create Password</Label>
                   <Input
                     type="password"
-                    name="password"
-                    id="OldPassword"
-                    placeholder="Old password "
-                  />
-                </FormGroup>
-                <FormGroup className="m-5">
-                  <Label for="SetPassword">Create Password</Label>
-                  <Input
-                    type="password"
-                    name="password"
+                    name="setPassword"
                     id="SetPassword"
                     placeholder="Set password "
+                    onChange={handlePasswordChangeSignIn}
                   />
                 </FormGroup>
                 <FormGroup className="m-5">
-                  <Label for="ConfirmPassword">Confirm Password</Label>
+                  <Label for="confirmPassword">Confirm Password</Label>
                   <Input
                     type="password"
-                    name="password"
-                    id="ConfirmPassword"
+                    name="confirmPassword"
+                    id="confirmPassword"
                     placeholder=" Confirm password "
+                    onChange={handlePasswordChangeSignIn}
                   />
                 </FormGroup>
-                <Button className=" button-signin m-5 d-flex justify-content-center align-items-center">
+                <Button
+                  className=" button-signin m-5 d-flex justify-content-center align-items-center"
+                  onClick={handlePasswordChange}
+                >
                   Update
                 </Button>
               </Form>

@@ -5,6 +5,7 @@ import {
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  updatePassword,
 } from "firebase/auth";
 
 import {
@@ -96,4 +97,15 @@ export const getData = async (uid) => {
   } catch (error) {
     console.error("Error getting document:", error);
   }
+};
+
+export const createNewPassword = (newPassword) => {
+  const user = auth.currentUser;
+  updatePassword(user, newPassword)
+    .then(() => {
+      console.log("password updated");
+    })
+    .catch((error) => {
+      console.log(error.code, "error");
+    });
 };

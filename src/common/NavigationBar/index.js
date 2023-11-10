@@ -22,7 +22,6 @@ import { useNavigate } from "react-router-dom";
 const NavigationBar = () => {
   const { currentUser } = useContext(UserContext);
 
-  console.log(currentUser, "currentUser from navbar");
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);

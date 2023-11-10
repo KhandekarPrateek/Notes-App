@@ -31,7 +31,6 @@ const SignIn = () => {
     setFormFieldsSignIn({ ...formFieldsSignIn, [name]: value });
   };
 
-  // console.log(formFieldsSignIn);
   const navigate = useNavigate();
 
   const routeTosignUp = () => {
@@ -39,7 +38,6 @@ const SignIn = () => {
   };
 
   const routeToDashboard = (dashboardName) => {
-    // console.log(dashboardName, "dashboardName");
     navigate(`/dashboard/${dashboardName}`);
   };
 
@@ -52,7 +50,7 @@ const SignIn = () => {
   const logWithGoogleUser = async () => {
     try {
       const { user } = await signInwithGooglePopup();
-      console.log(user);
+
       await createUserDocumentFromUserAuth(user);
 
       setCurrentUser(user);
@@ -79,11 +77,10 @@ const SignIn = () => {
         ...response2,
         displayName: response2.Name,
       };
-      console.log(response3, "response  3");
 
       if (response3.displayName) {
         setCurrentUser(response3);
-        console.log(response3.displayName, "name from email and password");
+
         routeToDashboard(response3.displayName);
       } else {
         console.log("Cant access your data");
@@ -120,7 +117,6 @@ const SignIn = () => {
                     name="email"
                     id="exampleEmail"
                     placeholder="Email"
-                    // value={email}
                     onChange={handleChangeSignIn}
                   />
                 </FormGroup>
@@ -131,7 +127,6 @@ const SignIn = () => {
                     name="password"
                     id="password"
                     placeholder="password "
-                    // value={password}
                     onChange={handleChangeSignIn}
                   />
                 </FormGroup>

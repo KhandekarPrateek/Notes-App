@@ -30,10 +30,10 @@ const NavigationBar = () => {
   const navigate = useNavigate();
 
   const routeToDashboard = () => {
-    navigate(`/dashboard/${currentUser}`);
+    navigate(`/dashboard/${currentUser.displayName}`);
   };
   const routeToProfile = () => {
-    navigate(`/profile/${currentUser}`);
+    navigate(`/profile/${currentUser.displayName}`);
   };
 
   return (
@@ -46,7 +46,7 @@ const NavigationBar = () => {
             onClick={routeToDashboard}
           />
           <NavbarToggler onClick={toggle} />
-          {location.pathname === `/dashboard/${currentUser}` ? (
+          {location.pathname === `/dashboard/${currentUser.displayName}` ? (
             <NavbarText>
               <h5>Note name</h5>
             </NavbarText>

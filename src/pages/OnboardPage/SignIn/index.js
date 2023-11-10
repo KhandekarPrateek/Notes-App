@@ -54,8 +54,8 @@ const SignIn = () => {
       const { user } = await signInwithGooglePopup();
       console.log(user);
       await createUserDocumentFromUserAuth(user);
-      console.log(user.displayName, "display name");
-      setCurrentUser(user.displayName);
+
+      setCurrentUser(user);
 
       navigateToDashboard(user);
     } catch (error) {
@@ -75,11 +75,16 @@ const SignIn = () => {
       const response = await signInUserWithEmailAndPassword(email, password);
 
       const response2 = await getData(response.user.uid);
+      const response3 = {
+        ...response2,
+        displayName: response2.Name,
+      };
+      console.log(response3, "response  3");
 
-      if (response2.Name) {
-        setCurrentUser(response2.Name);
-        console.log(response2.Name, "name from email and password");
-        routeToDashboard(response2.Name);
+      if (response3.displayName) {
+        setCurrentUser(response3);
+        console.log(response3.displayName, "name from email and password");
+        routeToDashboard(response3.displayName);
       } else {
         console.log("Cant access your data");
       }

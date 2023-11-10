@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Col,
   Container,
@@ -12,8 +12,12 @@ import {
 } from "reactstrap";
 import profile from "../../assets/profile.png";
 import NavigationBar from "../../common/NavigationBar";
+import { UserContext } from "../../context/context";
+import UserInfo from "./UserInfo";
 
 const Profile = () => {
+  const { currentUser } = useContext(UserContext);
+
   return (
     <>
       <Container className="profile-conatiner" fluid>
@@ -25,27 +29,13 @@ const Profile = () => {
           <Col sm={6}>
             {" "}
             <Row>
+              <h3 className="m-5">Your Profile</h3>
+
+              <UserInfo info={currentUser.displayName} title={"Name"} />
+              <UserInfo info={currentUser.email} title={"Email"} />
+              {/* <UserInfo info={currentUser.displayName}  title={Name}/> */}
+
               <Form>
-                <FormText>
-                  <h3 className="m-5">Your Profile</h3>
-                </FormText>{" "}
-                <FormGroup className="m-5">
-                  <Label>Name</Label>
-                  <Input id="name" name="name" placeholder="Name" />
-                </FormGroup>
-                <FormGroup className="m-5">
-                  <Label>Surname</Label>
-                  <Input id="surname" name="surname" placeholder="Surname" />
-                </FormGroup>
-                <FormGroup className="m-5">
-                  <Label for="exampleEmail">Email</Label>
-                  <Input
-                    type="email"
-                    name="email"
-                    id="exampleEmail"
-                    placeholder="Email"
-                  />
-                </FormGroup>
                 <h3 className="m-5">Change password</h3>
                 <FormGroup className="m-5">
                   <Label for="SetPassword">Old Password</Label>

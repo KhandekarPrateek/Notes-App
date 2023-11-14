@@ -28,13 +28,12 @@ const Profile = () => {
     const { name, value } = event.target;
     setPasswordField({ ...passwordField, [name]: value });
   };
-  console.log(passwordField);
+
   const handlePasswordChange = () => {
     if (setPassword === confirmPassword) {
-      console.log("proceed to change ");
       createNewPassword(setPassword);
     } else {
-      console.log(" passwords donot match");
+      alert(" passwords donot match");
     }
   };
 

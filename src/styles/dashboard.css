@@ -4,3 +4,6 @@
 .navbar-text {
   justify-content: end;
 }
+.navbar-icon {
+  cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState, useContext } from "react";
 import { GiNotebook } from "react-icons/gi";
 import { PiSignOut } from "react-icons/pi";
@@ -13,26 +13,52 @@ import {
   NavItem,
   NavLink,
   NavbarText,
-  Button,
 } from "reactstrap";
 import { useLocation } from "react-router";
 import { UserContext } from "../../context/context";
 import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
-  const { currentUser } = useContext(UserContext);
+  // const { currentUser } = useContext(UserContext);
+  const [Data, setParsedData] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
   const location = useLocation();
   const navigate = useNavigate();
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     "displayNameFromStorage",
+  //     JSON.stringify(currentUser.displayName)
+  //   );
+  // }, [currentUser.displayName]);
+  // useEffect(() => {
+  //   currentUser &&
+  //     currentUser.displayName &&
+  //     localStorage.setItem(
+  //       "displayNameFromStorage",
+  //       JSON.stringify(currentUser.displayName)
+  //     );
+  //
+  // }, []);
+  useEffect(() => {
+    const storedData = localStorage.getItem("userInfo");
+    const parsedData = JSON.parse(storedData);
+    setParsedData(parsedData);
+  }, []);
 
+  console.log(Data, "data");
   const routeToDashboard = () => {
-    navigate(`/dashboard/${currentUser.displayName}`);
+    console.log(Data, "dashboardData");
+    // navigate(`/dashboard/${currentUser.displayName}`);
+    navigate(`/dashboard/${Data.displayName}`);
   };
   const routeToProfile = () => {
-    navigate(`/profile/${currentUser.displayName}`);
+    console.log(Data, "dataProfile");
+
+    // // navigate(`/profile/${currentUser.displayName}`);
+    navigate(`/profile/${Data.displayName}`);
   };
 
   return (
@@ -45,7 +71,7 @@ const NavigationBar = () => {
             onClick={routeToDashboard}
           />
           <NavbarToggler onClick={toggle} />
-          {location.pathname === `/dashboard/${currentUser.displayName}` ? (
+          {location.pathname === `/dashboard/${Data?.displayName}` ? (
             <NavbarText>
               <h5>Note name</h5>
             </NavbarText>

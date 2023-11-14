@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -16,7 +16,17 @@ import UserInfo from "./UserInfo";
 import { createNewPassword } from "../../utils/firebase/firebase";
 
 const Profile = () => {
-  const { currentUser } = useContext(UserContext);
+  // const { currentUser } = useContext(UserContext);
+  const [userData, setUserData] = useState({
+    email: null,
+    displayName: null,
+  });
+  useEffect(() => {
+    const storedData = localStorage.getItem("userInfo");
+    const parsedData = JSON.parse(storedData);
+    setUserData(parsedData);
+  }, []);
+
   const defaultPassword = {
     setPassword: "",
     confirmPassword: "",
@@ -28,13 +38,12 @@ const Profile = () => {
     const { name, value } = event.target;
     setPasswordField({ ...passwordField, [name]: value });
   };
-  console.log(passwordField);
+
   const handlePasswordChange = () => {
     if (setPassword === confirmPassword) {
-      console.log("proceed to change ");
       createNewPassword(setPassword);
     } else {
-      console.log(" passwords donot match");
+      alert(" passwords donot match");
     }
   };
 
@@ -50,9 +59,9 @@ const Profile = () => {
             {" "}
             <Row>
               <h3 className="m-5">Your Profile</h3>
-
-              <UserInfo info={currentUser.displayName} title={"Name"} />
-              <UserInfo info={currentUser.email} title={"Email"} />
+              {console.log(userData, "userData")}
+              <UserInfo info={userData.displayName} title={"Name"} />
+              <UserInfo info={userData.email} title={"Email"} />
 
               <Form>
                 <h3 className="m-5">Change password</h3>

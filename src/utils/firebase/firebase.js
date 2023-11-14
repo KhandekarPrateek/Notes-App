@@ -103,7 +103,7 @@ export const createNewPassword = (newPassword) => {
   const user = auth.currentUser;
   updatePassword(user, newPassword)
     .then(() => {
-      console.log("password updated");
+      alert("password updated");
     })
     .catch((error) => {
       console.log(error.code, "error");

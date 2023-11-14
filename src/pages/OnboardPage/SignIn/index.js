@@ -79,8 +79,8 @@ const SignIn = () => {
       };
 
       if (response3.displayName) {
-        setCurrentUser(response3);
-
+        // setCurrentUser(response3);
+        localStorage.setItem("userInfo", JSON.stringify(response3));
         routeToDashboard(response3.displayName);
       } else {
         console.log("Cant access your data");

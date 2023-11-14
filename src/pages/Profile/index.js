@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Col,
   Container,
@@ -11,12 +11,10 @@ import {
 } from "reactstrap";
 import profile from "../../assets/profile.png";
 import NavigationBar from "../../common/NavigationBar";
-import { UserContext } from "../../context/context";
 import UserInfo from "./UserInfo";
 import { createNewPassword } from "../../utils/firebase/firebase";
 
 const Profile = () => {
-  // const { currentUser } = useContext(UserContext);
   const [userData, setUserData] = useState({
     email: null,
     displayName: null,

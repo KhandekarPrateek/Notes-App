@@ -18,7 +18,6 @@ import {
   signInUserWithEmailAndPassword,
   getData,
 } from "../../../utils/firebase/firebase";
-import { UserContext } from "../../../context/context";
 const SignIn = () => {
   const defaultFormFields = {
     email: "",
@@ -45,7 +44,6 @@ const SignIn = () => {
     const { emailVerified, displayName } = user;
     emailVerified ? routeToDashboard(displayName) : console.log("error");
   };
-  const { setCurrentUser } = useContext(UserContext);
 
   const logWithGoogleUser = async () => {
     try {
@@ -53,7 +51,7 @@ const SignIn = () => {
 
       await createUserDocumentFromUserAuth(user);
 
-      setCurrentUser(user);
+      localStorage.setItem("userInfo", JSON.stringify(user));
 
       navigateToDashboard(user);
     } catch (error) {
@@ -79,7 +77,6 @@ const SignIn = () => {
       };
 
       if (response3.displayName) {
-        // setCurrentUser(response3);
         localStorage.setItem("userInfo", JSON.stringify(response3));
         routeToDashboard(response3.displayName);
       } else {

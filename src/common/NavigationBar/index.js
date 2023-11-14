@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { GiNotebook } from "react-icons/gi";
 import { PiSignOut } from "react-icons/pi";
 import { VscAccount } from "react-icons/vsc";
@@ -15,11 +15,9 @@ import {
   NavbarText,
 } from "reactstrap";
 import { useLocation } from "react-router";
-import { UserContext } from "../../context/context";
 import { useNavigate } from "react-router-dom";
 
 const NavigationBar = () => {
-  // const { currentUser } = useContext(UserContext);
   const [Data, setParsedData] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -27,21 +25,7 @@ const NavigationBar = () => {
   const toggle = () => setIsOpen(!isOpen);
   const location = useLocation();
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   localStorage.setItem(
-  //     "displayNameFromStorage",
-  //     JSON.stringify(currentUser.displayName)
-  //   );
-  // }, [currentUser.displayName]);
-  // useEffect(() => {
-  //   currentUser &&
-  //     currentUser.displayName &&
-  //     localStorage.setItem(
-  //       "displayNameFromStorage",
-  //       JSON.stringify(currentUser.displayName)
-  //     );
-  //
-  // }, []);
+
   useEffect(() => {
     const storedData = localStorage.getItem("userInfo");
     const parsedData = JSON.parse(storedData);
@@ -51,13 +35,11 @@ const NavigationBar = () => {
   console.log(Data, "data");
   const routeToDashboard = () => {
     console.log(Data, "dashboardData");
-    // navigate(`/dashboard/${currentUser.displayName}`);
     navigate(`/dashboard/${Data.displayName}`);
   };
   const routeToProfile = () => {
     console.log(Data, "dataProfile");
 
-    // // navigate(`/profile/${currentUser.displayName}`);
     navigate(`/profile/${Data.displayName}`);
   };
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Col, Container, Row } from "reactstrap";
+import { Button, Col, Container, Input, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
 
@@ -12,19 +12,27 @@ const Notes = () => {
     noteImage: null,
   };
   const [note, setNote] = useState([defaultNote]);
+  const [heading, setHeading] = useState("");
+  const [content, setContent] = useState("");
 
   const createNewNote = () => {
     const newNote = {
       ...defaultNote,
       noteId: note.length + 1,
       noteUUId: nanoid(),
+      noteHeader: heading,
+      noteContent: content,
     };
-    const noteArray = [defaultNote];
-    noteArray.push(newNote);
-    setNote(noteArray);
+
+    setNote([...note, newNote]);
   };
   console.log(note, "notes");
-
+  const handleNoteNameChange = (event) => {
+    setHeading(event.target.value);
+  };
+  const handleNoteContentChange = (event) => {
+    setContent(event.target.value);
+  };
   return (
     <Container fluid className="profile-conatiner">
       <NavigationBar />
@@ -38,29 +46,35 @@ const Notes = () => {
         </Row>
       ) : (
         <>
-          <div
-            className="offcanvas offcanvas-start"
-            tabindex="-1"
-            id="offcanvas"
-            aria-labelledby="offcanvasLabel"
-          >
-            <div className="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasLabel">
-                Offcanvas
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="offcanvas"
-                data-bs-target="#my-offcanvas"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="offcanvas-body">
-              Content for the offcanvas goes here. You can place just about any
-              Bootstrap component or custom elements here.
-            </div>
-          </div>
+          <Row className="h-100">
+            <Col sm={3} className="border border-5  ">
+              <h2 className="text-center">Notes name</h2>
+              <Button onClick={createNewNote}>Add note</Button>
+              <div>
+                {note.map((e) => {
+                  return <h6>{e.noteHeader}</h6>;
+                })}
+              </div>
+            </Col>
+
+            <Col sm={6}>
+              create your notes
+              <Input
+                name="noteHeader"
+                placeholder="Notes heading"
+                type="text"
+                onChange={handleNoteNameChange}
+              />
+              Write Your notes
+              <Input
+                name="noteContent"
+                placeholder="Notes Content"
+                type="text"
+                onChange={handleNoteContentChange}
+                row={40}
+              />
+            </Col>
+          </Row>
         </>
       )}
     </Container>

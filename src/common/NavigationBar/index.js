@@ -32,7 +32,6 @@ const NavigationBar = () => {
     setParsedData(parsedData);
   }, []);
 
-  console.log(Data, "data");
   const routeToDashboard = () => {
     console.log(Data, "dashboardData");
     navigate(`/dashboard/${Data.displayName}`);

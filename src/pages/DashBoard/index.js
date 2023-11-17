@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import { Button, Col, Container, Input, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
-
+import { IoMdAdd } from "react-icons/io";
+import { CgTrash } from "react-icons/cg";
 const Notes = () => {
   const defaultNote = {
     noteUUId: nanoid(),
     noteId: 1,
-    noteHeader: "Get started",
+    noteHeader: null,
     noteContent: "Create Your own notes",
     noteImage: null,
   };
   const [note, setNote] = useState([defaultNote]);
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
+  const defaultNoteBody = {
+    head: null,
+    body: null,
+  };
 
   const createNewNote = () => {
     const newNote = {
@@ -23,8 +28,9 @@ const Notes = () => {
       noteHeader: heading,
       noteContent: content,
     };
-
     setNote([...note, newNote]);
+    setHeading("");
+    setContent("");
   };
   console.log(note, "notes");
   const handleNoteNameChange = (event) => {
@@ -33,6 +39,25 @@ const Notes = () => {
   const handleNoteContentChange = (event) => {
     setContent(event.target.value);
   };
+
+  const openNoteBody = (num) => {
+    const noteContentOnClick = note[num].noteContent;
+    const noteHeaderOnClick = note[num].noteHeader;
+
+    setHeading(noteHeaderOnClick);
+    setContent(noteContentOnClick);
+  };
+
+  const removeNote = (num) => {
+    setHeading("");
+    setContent("");
+    setNote(
+      note.filter((ele, index) => {
+        return index !== num;
+      })
+    );
+  };
+
   return (
     <Container fluid className="profile-conatiner">
       <NavigationBar />
@@ -48,11 +73,33 @@ const Notes = () => {
         <>
           <Row className="h-100">
             <Col sm={3} className="border border-5  ">
-              <h2 className="text-center">Notes name</h2>
-              <Button onClick={createNewNote}>Add note</Button>
+              <div className="justify-content-between d-flex">
+                <h2>Notes name</h2>
+
+                <IoMdAdd
+                  onClick={createNewNote}
+                  size={35}
+                  className="icon-cursor"
+                />
+              </div>
               <div>
-                {note.map((e) => {
-                  return <h6>{e.noteHeader}</h6>;
+                {note.map((e, index) => {
+                  return (
+                    e.noteHeader && (
+                      <div className="justify-content-between d-flex">
+                        <h6
+                          className="icon-cursor"
+                          onClick={() => openNoteBody(index)}
+                        >
+                          {e.noteHeader}
+                        </h6>
+                        <CgTrash
+                          className="icon-cursor"
+                          onClick={() => removeNote(index)}
+                        />
+                      </div>
+                    )
+                  );
                 })}
               </div>
             </Col>
@@ -64,6 +111,7 @@ const Notes = () => {
                 placeholder="Notes heading"
                 type="text"
                 onChange={handleNoteNameChange}
+                value={heading}
               />
               Write Your notes
               <Input
@@ -72,6 +120,7 @@ const Notes = () => {
                 type="text"
                 onChange={handleNoteContentChange}
                 row={40}
+                value={content}
               />
             </Col>
           </Row>

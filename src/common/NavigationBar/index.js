@@ -48,7 +48,7 @@ const NavigationBar = () => {
         <Navbar color="dark" light expand="md" dark>
           <GiNotebook
             size={35}
-            className="mx-3 text-light  navbar-icon"
+            className="mx-3 text-light  icon-cursor"
             onClick={routeToDashboard}
           />
           <NavbarToggler onClick={toggle} />
@@ -67,13 +67,13 @@ const NavigationBar = () => {
               <NavItem>
                 <VscAccount
                   size={35}
-                  className="mt-2 text-light navbar-icon"
+                  className="mt-2 text-light icon-cursor"
                   onClick={routeToProfile}
                 />
               </NavItem>
               <NavItem>
                 <NavLink href="/signin">
-                  <PiSignOut size={35} className="mx-3 navbar-icon" />
+                  <PiSignOut size={35} className="mx-3 icon-cursor" />
                 </NavLink>
               </NavItem>
             </Nav>

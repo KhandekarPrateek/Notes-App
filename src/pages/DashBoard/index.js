@@ -60,7 +60,7 @@ const Notes = () => {
 
   return (
     <Container fluid className="profile-conatiner">
-      <NavigationBar />
+      <NavigationBar name={heading} />
       {note.length === 1 ? (
         <Row className="h-100">
           <div className="d-flex align-items-center justify-content-center">

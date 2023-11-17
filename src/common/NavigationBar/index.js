@@ -17,7 +17,7 @@ import {
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
 
-const NavigationBar = () => {
+const NavigationBar = ({ name }) => {
   const [Data, setParsedData] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -54,7 +54,7 @@ const NavigationBar = () => {
           <NavbarToggler onClick={toggle} />
           {location.pathname === `/dashboard/${Data?.displayName}` ? (
             <NavbarText>
-              <h5>Note name</h5>
+              <h5>{name.length === 0 ? "Notes" : name}</h5>
             </NavbarText>
           ) : (
             <NavbarText>

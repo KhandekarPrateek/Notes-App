@@ -57,7 +57,6 @@ const Profile = () => {
             {" "}
             <Row>
               <h3 className="m-5">Your Profile</h3>
-              {console.log(userData, "userData")}
               <UserInfo info={userData.displayName} title={"Name"} />
               <UserInfo info={userData.email} title={"Email"} />
 

@@ -3,7 +3,9 @@ import { Button, Col, Container, Input, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
 import { IoMdAdd } from "react-icons/io";
-import { CgTrash } from "react-icons/cg";
+import NotesName from "./NotesName";
+import { useNavigate } from "react-router";
+
 const Notes = () => {
   const defaultNote = {
     noteUUId: nanoid(),
@@ -15,10 +17,6 @@ const Notes = () => {
   const [note, setNote] = useState([defaultNote]);
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
-  const defaultNoteBody = {
-    head: null,
-    body: null,
-  };
 
   const createNewNote = () => {
     const newNote = {
@@ -31,8 +29,8 @@ const Notes = () => {
     setNote([...note, newNote]);
     setHeading("");
     setContent("");
+    navigateToNoteName(note.length - 1);
   };
-  console.log(note, "notes");
   const handleNoteNameChange = (event) => {
     setHeading(event.target.value);
   };
@@ -46,6 +44,7 @@ const Notes = () => {
 
     setHeading(noteHeaderOnClick);
     setContent(noteContentOnClick);
+    navigateToNoteName(num);
   };
 
   const removeNote = (num) => {
@@ -56,8 +55,25 @@ const Notes = () => {
         return index !== num;
       })
     );
+    console.log("num", num);
+    if (note.length - 1 > 0) {
+      navigateToNoteName(0);
+    } else {
+      navigateToNoteName();
+    }
   };
+  const navigate = useNavigate();
+  const navigateToNoteName = (num) => {
+    const storedData = localStorage.getItem("userInfo");
+    const parsedData = JSON.parse(storedData);
+    if (note[num].noteHeader === null) {
+      console.log(note[num].noteHeader, "note[num].noteHeader");
 
+      navigate(`/dashboard/${parsedData.displayName}/`);
+    } else {
+      navigate(`/dashboard/${parsedData.displayName}/${note[num].noteHeader}`);
+    }
+  };
   return (
     <Container fluid className="profile-conatiner">
       <NavigationBar name={heading} />
@@ -85,20 +101,12 @@ const Notes = () => {
               <div>
                 {note.map((e, index) => {
                   return (
-                    e.noteHeader && (
-                      <div className="justify-content-between d-flex">
-                        <h6
-                          className="icon-cursor"
-                          onClick={() => openNoteBody(index)}
-                        >
-                          {e.noteHeader}
-                        </h6>
-                        <CgTrash
-                          className="icon-cursor"
-                          onClick={() => removeNote(index)}
-                        />
-                      </div>
-                    )
+                    <NotesName
+                      note={e.noteHeader}
+                      index={index}
+                      openNoteBody={() => openNoteBody(index)}
+                      removeNote={() => removeNote(index)}
+                    />
                   );
                 })}
               </div>

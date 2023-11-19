@@ -33,12 +33,9 @@ const NavigationBar = ({ name }) => {
   }, []);
 
   const routeToDashboard = () => {
-    console.log(Data, "dashboardData");
     navigate(`/dashboard/${Data.displayName}`);
   };
   const routeToProfile = () => {
-    console.log(Data, "dataProfile");
-
     navigate(`/profile/${Data.displayName}`);
   };
 
@@ -52,13 +49,19 @@ const NavigationBar = ({ name }) => {
             onClick={routeToDashboard}
           />
           <NavbarToggler onClick={toggle} />
-          {location.pathname === `/dashboard/${Data?.displayName}` ? (
+          {location.pathname === `/dashboard/${Data?.displayName}/${name}` && (
             <NavbarText>
-              <h5>{name.length === 0 ? "Notes" : name}</h5>
+              <h5>{name}</h5>
             </NavbarText>
-          ) : (
+          )}
+          {location.pathname === `/dashboard/${Data?.displayName}/` && (
             <NavbarText>
-              <h5>Go to Dashboard</h5>
+              <h5>notes</h5>
+            </NavbarText>
+          )}
+          {location.pathname === `/profile/${Data?.displayName}` && (
+            <NavbarText>
+              <h5>Go to dashboard</h5>
             </NavbarText>
           )}
 

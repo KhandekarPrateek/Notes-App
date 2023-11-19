@@ -4,16 +4,19 @@ import SignIn from "./pages/OnboardPage/SignIn";
 import SignUp from "./pages/OnboardPage/SignUp";
 import DashBoard from "./pages/DashBoard";
 import Profile from "./pages/Profile";
+import NotesName from "./pages/DashBoard/NotesName";
 
 function App() {
   return (
     <div>
       <Routes>
         <Route path="/">
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/dashboard/:displayName" element={<DashBoard />} />
-          <Route path="/profile/:displayName" element={<Profile />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="dashboard/:displayName" element={<DashBoard />}>
+            <Route path=":noteName" element={<NotesName />} />
+          </Route>
+          <Route path="profile/:displayName" element={<Profile />} />
         </Route>
       </Routes>
     </div>

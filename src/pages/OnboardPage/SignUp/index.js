@@ -48,6 +48,8 @@ const SignUp = () => {
         setPassword
       );
       await createUserDocumentFromUserAuth(user, { Name });
+      alert("Sign Up successful");
+      routeTosignIn();
       clearFormFields();
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {

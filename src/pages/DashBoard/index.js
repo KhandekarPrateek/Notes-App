@@ -29,7 +29,6 @@ const Notes = () => {
     setNote([...note, newNote]);
     setHeading("");
     setContent("");
-    navigateToNoteName(note.length - 1);
   };
   const handleNoteNameChange = (event) => {
     setHeading(event.target.value);
@@ -55,7 +54,6 @@ const Notes = () => {
         return index !== num;
       })
     );
-    console.log("num", num);
     if (note.length - 1 > 0) {
       navigateToNoteName(0);
     } else {
@@ -67,12 +65,21 @@ const Notes = () => {
     const storedData = localStorage.getItem("userInfo");
     const parsedData = JSON.parse(storedData);
     if (note[num].noteHeader === null) {
-      console.log(note[num].noteHeader, "note[num].noteHeader");
-
       navigate(`/dashboard/${parsedData.displayName}/`);
     } else {
       navigate(`/dashboard/${parsedData.displayName}/${note[num].noteHeader}`);
     }
+  };
+  const updateNote = (num) => {
+    setNote(
+      note.map((element, index) => {
+        if (index === num) {
+          return { ...element, noteContent: content, noteHeader: heading };
+        } else {
+          return element;
+        }
+      })
+    );
   };
   return (
     <Container fluid className="profile-conatiner">
@@ -106,6 +113,7 @@ const Notes = () => {
                       index={index}
                       openNoteBody={() => openNoteBody(index)}
                       removeNote={() => removeNote(index)}
+                      updateNote={() => updateNote(index)}
                     />
                   );
                 })}

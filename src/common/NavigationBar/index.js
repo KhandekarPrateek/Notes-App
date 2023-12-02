@@ -54,7 +54,7 @@ const NavigationBar = ({ name }) => {
               <h5>{name}</h5>
             </NavbarText>
           )}
-          {location.pathname === `/dashboard/${Data?.displayName}/` && (
+          {location.pathname === `/dashboard/${Data?.displayName}` && (
             <NavbarText>
               <h5>notes</h5>
             </NavbarText>

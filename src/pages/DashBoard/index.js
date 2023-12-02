@@ -1,12 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Input, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
 import { IoMdAdd } from "react-icons/io";
 import NotesName from "./NotesName";
 import { useNavigate } from "react-router";
+import {
+  auth,
+  fetchFirebaseNote,
+  handleUID,
+} from "../../utils/firebase/firebase";
 
+import { createFirbaseNote } from "../../utils/firebase/firebase";
 const Notes = () => {
+  useEffect(() => {
+    handleUID();
+  }, [auth]);
+
   const defaultNote = {
     noteUUId: nanoid(),
     noteId: 1,
@@ -14,9 +24,24 @@ const Notes = () => {
     noteContent: "Create Your own notes",
     noteImage: null,
   };
-  const [note, setNote] = useState([defaultNote]);
+
+  const [note, setNote] = useState([]);
+
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
+  const fetchingData = async () => {
+    const fetchedData = await fetchFirebaseNote();
+    console.log(fetchedData, "fetched data");
+    if ("note" in fetchedData) {
+      setNote(fetchedData.note);
+      console.log("fetched state", note);
+    } else {
+      return;
+    }
+  };
+  useEffect(() => {
+    fetchingData();
+  }, []);
 
   const createNewNote = () => {
     const newNote = {
@@ -29,7 +54,13 @@ const Notes = () => {
     setNote([...note, newNote]);
     setHeading("");
     setContent("");
+    const result = [...note, newNote].filter((element) => {
+      return element.noteHeader !== "";
+    });
+    console.log(result, "result");
+    createFirbaseNote(result);
   };
+
   const handleNoteNameChange = (event) => {
     setHeading(event.target.value);
   };
@@ -65,7 +96,7 @@ const Notes = () => {
     const storedData = localStorage.getItem("userInfo");
     const parsedData = JSON.parse(storedData);
     if (note[num].noteHeader === null) {
-      navigate(`/dashboard/${parsedData.displayName}/`);
+      navigate(`/dashboard/${parsedData.displayName}`);
     } else {
       navigate(`/dashboard/${parsedData.displayName}/${note[num].noteHeader}`);
     }
@@ -84,7 +115,7 @@ const Notes = () => {
   return (
     <Container fluid className="profile-conatiner">
       <NavigationBar name={heading} />
-      {note.length === 1 ? (
+      {note.length === 0 ? (
         <Row className="h-100">
           <div className="d-flex align-items-center justify-content-center">
             <h1>You have no notes</h1>

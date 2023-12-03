@@ -77,11 +77,12 @@ const Notes = () => {
   const removeNote = (num) => {
     setHeading("");
     setContent("");
-    setNote(
-      note.filter((ele, index) => {
-        return index !== num;
-      })
-    );
+    createFirbaseNote(note);
+    const abc = note.filter((ele, index) => {
+      return index !== num;
+    });
+    setNote(abc);
+    createFirbaseNote(abc);
     if (note.length > 0) {
       navigateToNoteName(0);
     } else {
@@ -100,15 +101,9 @@ const Notes = () => {
   };
 
   const updateNote = (index) => {
-    console.log(index, "index");
-    console.log(note[index], "note[index]");
-    console.log(content, "content");
-    console.log(heading, "header");
     note[index].noteContent = content;
     note[index].noteHeader = heading;
-    console.log(note[index].noteContent, "note[index].noteContent");
     const abc = note;
-    console.log(abc, "abc");
     setNote(abc);
     createFirbaseNote(abc);
   };

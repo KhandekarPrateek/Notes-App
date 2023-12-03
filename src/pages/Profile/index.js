@@ -15,14 +15,15 @@ import UserInfo from "./UserInfo";
 import { createNewPassword } from "../../utils/firebase/firebase";
 
 const Profile = () => {
-  const [userData, setUserData] = useState({
-    email: null,
-    displayName: null,
-  });
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
   useEffect(() => {
     const storedData = localStorage.getItem("userInfo");
     const parsedData = JSON.parse(storedData);
-    setUserData(parsedData);
+    setUserName(parsedData);
+    const storedEmail = localStorage.getItem("userEmail");
+    const parsedEmail = JSON.parse(storedEmail);
+    setUserEmail(parsedEmail);
   }, []);
 
   const defaultPassword = {
@@ -57,8 +58,8 @@ const Profile = () => {
             {" "}
             <Row>
               <h3 className="m-5">Your Profile</h3>
-              <UserInfo info={userData.displayName} title={"Name"} />
-              <UserInfo info={userData.email} title={"Email"} />
+              <UserInfo info={userName} title={"Name"} />
+              <UserInfo info={userEmail} title={"Email"} />
 
               <Form>
                 <h3 className="m-5">Change password</h3>

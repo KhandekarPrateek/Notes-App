@@ -96,9 +96,9 @@ const Notes = () => {
     const storedData = localStorage.getItem("userInfo");
     const parsedData = JSON.parse(storedData);
     if (note[num].noteHeader === null) {
-      navigate(`/dashboard/${parsedData.displayName}`);
+      navigate(`/dashboard/${parsedData}`);
     } else {
-      navigate(`/dashboard/${parsedData.displayName}/${note[num].noteHeader}`);
+      navigate(`/dashboard/${parsedData}/${note[num].noteHeader}`);
     }
   };
   const updateNote = (num) => {

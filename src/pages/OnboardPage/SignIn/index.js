@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import {
   Col,
   Container,
@@ -51,7 +51,8 @@ const SignIn = () => {
 
       await createUserDocumentFromUserAuth(user);
 
-      localStorage.setItem("userInfo", JSON.stringify(user));
+      localStorage.setItem("userInfo", JSON.stringify(user.displayName));
+      localStorage.setItem("userEmail", JSON.stringify(user.email));
 
       navigateToDashboard(user);
     } catch (error) {
@@ -77,7 +78,9 @@ const SignIn = () => {
       };
 
       if (response3.displayName) {
-        localStorage.setItem("userInfo", JSON.stringify(response3));
+        localStorage.setItem("userInfo", JSON.stringify(response3.displayName));
+        localStorage.setItem("userEmail", JSON.stringify(response3.email));
+
         routeToDashboard(response3.displayName);
       } else {
         console.log("Cant access your data");

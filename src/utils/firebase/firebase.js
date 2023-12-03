@@ -125,42 +125,6 @@ export const createFirbaseNote = async (note) => {
 
   const docRef = doc(db, "users", userUID);
 
-  // // Fetch existing data
-  // const docSnapshot = await getDoc(docRef);
-  // if (docSnapshot.exists()) {
-  //   const existingData = docSnapshot.data();
-
-  //   // Update the 'note' field
-  //   if ("note" in existingData) {
-  //     const updatedData = {
-  //       ...existingData,
-  //       note: [...existingData.note, ...note], // Append new notes to the existing ones
-  //     };
-  //     updateDoc(docRef, updatedData)
-  //       .then((docRef) => {
-  //         console.log(
-  //           "A New Document Field has been added to an existing document"
-  //         );
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     console.log("the note array is not formed");
-  //     const userNote = {
-  //       note,
-  //     };
-  //     updateDoc(docRef, userNote)
-  //       .then((docRef) => {
-  //         console.log(
-  //           "A New Document Field has been added to an existing document"
-  //         );
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // }
   const userNote = {
     note,
   };
@@ -183,7 +147,6 @@ export const fetchFirebaseNote = async () => {
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
       const data = docSnapshot.data();
-      // console.log(data, "data from a func");
       return data;
     } else {
       console.log("No such document!");

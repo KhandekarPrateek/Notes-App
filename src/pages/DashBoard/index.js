@@ -31,10 +31,8 @@ const Notes = () => {
   const [content, setContent] = useState("");
   const fetchingData = async () => {
     const fetchedData = await fetchFirebaseNote();
-    console.log(fetchedData, "fetched data");
     if ("note" in fetchedData) {
       setNote(fetchedData.note);
-      console.log("fetched state", note);
     } else {
       return;
     }
@@ -57,7 +55,6 @@ const Notes = () => {
     const result = [...note, newNote].filter((element) => {
       return element.noteHeader !== "";
     });
-    console.log(result, "result");
     createFirbaseNote(result);
   };
 
@@ -85,7 +82,7 @@ const Notes = () => {
         return index !== num;
       })
     );
-    if (note.length - 1 > 0) {
+    if (note.length > 0) {
       navigateToNoteName(0);
     } else {
       navigateToNoteName();
@@ -101,16 +98,19 @@ const Notes = () => {
       navigate(`/dashboard/${parsedData}/${note[num].noteHeader}`);
     }
   };
-  const updateNote = (num) => {
-    setNote(
-      note.map((element, index) => {
-        if (index === num) {
-          return { ...element, noteContent: content, noteHeader: heading };
-        } else {
-          return element;
-        }
-      })
-    );
+
+  const updateNote = (index) => {
+    console.log(index, "index");
+    console.log(note[index], "note[index]");
+    console.log(content, "content");
+    console.log(heading, "header");
+    note[index].noteContent = content;
+    note[index].noteHeader = heading;
+    console.log(note[index].noteContent, "note[index].noteContent");
+    const abc = note;
+    console.log(abc, "abc");
+    setNote(abc);
+    createFirbaseNote(abc);
   };
   return (
     <Container fluid className="profile-conatiner">
@@ -142,9 +142,9 @@ const Notes = () => {
                     <NotesName
                       note={e.noteHeader}
                       index={index}
-                      openNoteBody={() => openNoteBody(index)}
-                      removeNote={() => removeNote(index)}
-                      updateNote={() => updateNote(index)}
+                      openNoteBody={openNoteBody}
+                      removeNote={removeNote}
+                      updateNote={updateNote}
                     />
                   );
                 })}

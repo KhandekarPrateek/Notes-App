@@ -40,50 +40,48 @@ const NavigationBar = ({ name }) => {
   };
 
   return (
-    <>
-      <Container fluid>
-        <Navbar color="dark" light expand="md" dark>
-          <GiNotebook
-            size={35}
-            className="mx-3 text-light  icon-cursor"
-            onClick={routeToDashboard}
-          />
-          <NavbarToggler onClick={toggle} />
-          {location.pathname === `/dashboard/${Data}/${name}` && (
-            <NavbarText>
-              <h5>{name}</h5>
-            </NavbarText>
-          )}
-          {location.pathname === `/dashboard/${Data}` && (
-            <NavbarText>
-              <h5>notes</h5>
-            </NavbarText>
-          )}
-          {location.pathname === `/profile/${Data}` && (
-            <NavbarText>
-              <h5>Go to dashboard</h5>
-            </NavbarText>
-          )}
+    <div>
+      <Navbar color="dark" light expand="md" dark>
+        <GiNotebook
+          size={35}
+          className="mx-3 text-light  icon-cursor"
+          onClick={routeToDashboard}
+        />
+        <NavbarToggler onClick={toggle} />
+        {location.pathname === `/dashboard/${Data}/${name}` && (
+          <NavbarText>
+            <h5>{name}</h5>
+          </NavbarText>
+        )}
+        {location.pathname === `/dashboard/${Data}` && (
+          <NavbarText>
+            <h5>notes</h5>
+          </NavbarText>
+        )}
+        {location.pathname === `/profile/${Data}` && (
+          <NavbarText>
+            <h5>Go to dashboard</h5>
+          </NavbarText>
+        )}
 
-          <Collapse isOpen={isOpen} navbar className="navbar-text">
-            <Nav className="ml-auto " navbar>
-              <NavItem>
-                <VscAccount
-                  size={35}
-                  className="mt-2 text-light icon-cursor"
-                  onClick={routeToProfile}
-                />
-              </NavItem>
-              <NavItem>
-                <NavLink href="/signin">
-                  <PiSignOut size={35} className="mx-3 icon-cursor" />
-                </NavLink>
-              </NavItem>
-            </Nav>
-          </Collapse>
-        </Navbar>
-      </Container>
-    </>
+        <Collapse isOpen={isOpen} navbar className="navbar-text">
+          <Nav className="ml-auto " navbar>
+            <NavItem>
+              <VscAccount
+                size={35}
+                className="mt-2 text-light icon-cursor"
+                onClick={routeToProfile}
+              />
+            </NavItem>
+            <NavItem>
+              <NavLink href="/signin">
+                <PiSignOut size={35} className="mx-3 icon-cursor" />
+              </NavLink>
+            </NavItem>
+          </Nav>
+        </Collapse>
+      </Navbar>
+    </div>
   );
 };
 

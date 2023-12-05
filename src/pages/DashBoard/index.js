@@ -114,7 +114,7 @@ const Notes = () => {
     color: theme.color,
   };
   return (
-    <Container fluid className="profile-conatiner">
+    <div className="profile-container">
       <NavigationBar name={heading} />
       {note.length === 0 ? (
         <Row className="h-100">
@@ -177,7 +177,7 @@ const Notes = () => {
           </Row>
         </>
       )}
-    </Container>
+    </div>
   );
 };
 

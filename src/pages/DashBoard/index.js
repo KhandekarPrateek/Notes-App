@@ -172,7 +172,6 @@ const Notes = () => {
                 row={40}
                 value={content}
               />
-              <Button onClick={toggleTheme}>Change theme</Button>
             </Col>
           </Row>
         </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Col, Container, Input, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
@@ -12,6 +12,7 @@ import {
 } from "../../utils/firebase/firebase";
 
 import { createFirbaseNote } from "../../utils/firebase/firebase";
+import { ThemeContext } from "../../utils/ThemeContext";
 const Notes = () => {
   useEffect(() => {
     handleUID();
@@ -29,6 +30,7 @@ const Notes = () => {
 
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
+  const [{ theme, isDark }, toggleTheme] = useContext(ThemeContext);
   const fetchingData = async () => {
     const fetchedData = await fetchFirebaseNote();
     if ("note" in fetchedData) {
@@ -107,6 +109,10 @@ const Notes = () => {
     setNote(abc);
     createFirbaseNote(abc);
   };
+  const styles = {
+    backgroundColor: theme.backgroundColor,
+    color: theme.color,
+  };
   return (
     <Container fluid className="profile-conatiner">
       <NavigationBar name={heading} />
@@ -121,7 +127,7 @@ const Notes = () => {
       ) : (
         <>
           <Row className="h-100">
-            <Col sm={3} className="border border-5  ">
+            <Col sm={3} className="border border-5  " style={styles}>
               <div className="justify-content-between d-flex">
                 <h2>Notes name</h2>
 
@@ -146,9 +152,10 @@ const Notes = () => {
               </div>
             </Col>
 
-            <Col sm={6}>
+            <Col sm={9} style={styles}>
               create your notes
               <Input
+                style={styles}
                 name="noteHeader"
                 placeholder="Notes heading"
                 type="text"
@@ -157,6 +164,7 @@ const Notes = () => {
               />
               Write Your notes
               <Input
+                style={styles}
                 name="noteContent"
                 placeholder="Notes Content"
                 type="text"
@@ -164,6 +172,7 @@ const Notes = () => {
                 row={40}
                 value={content}
               />
+              <Button onClick={toggleTheme}>Change theme</Button>
             </Col>
           </Row>
         </>

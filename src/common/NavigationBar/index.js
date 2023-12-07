@@ -71,7 +71,7 @@ const NavigationBar = ({ name }) => {
           <Nav className="ml-auto " navbar>
             <NavItem>
               <div onClick={toggleTheme} className="m-2 text-light icon-cursor">
-                {isDark ? <FaMoon size={35} /> : <FaSun size={35} />}
+                {!isDark ? <FaMoon size={35} /> : <FaSun size={35} />}
               </div>
             </NavItem>
             <NavItem>

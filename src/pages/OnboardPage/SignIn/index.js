@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import {
   Col,
@@ -18,6 +18,7 @@ import {
   signInUserWithEmailAndPassword,
   getData,
 } from "../../../utils/firebase/firebase";
+import { ThemeContext } from "../../../utils/ThemeContext";
 const SignIn = () => {
   const defaultFormFields = {
     email: "",
@@ -97,8 +98,13 @@ const SignIn = () => {
       console.log(error, "error");
     }
   };
+  const [{ theme }] = useContext(ThemeContext);
+  const styles = {
+    backgroundColor: theme.backgroundColor,
+    color: theme.color,
+  };
   return (
-    <Container className="container-signin" fluid>
+    <Container className="container-signin" fluid style={styles}>
       <Row className="h-100 w-100">
         <Col
           className="h-100 justify-content-center d-flex align-items-center"
@@ -113,6 +119,7 @@ const SignIn = () => {
                 <FormGroup className="m-5">
                   <Label for="exampleEmail">Email</Label>
                   <Input
+                    style={styles}
                     type="email"
                     name="email"
                     id="exampleEmail"
@@ -123,6 +130,7 @@ const SignIn = () => {
                 <FormGroup className="m-5">
                   <Label for="password">Password</Label>
                   <Input
+                    style={styles}
                     type="password"
                     name="password"
                     id="password"
@@ -175,8 +183,13 @@ const SignIn = () => {
         <Col
           className="display-signin h-100  justify-content-center d-flex align-items-center"
           sm={8}
+          style={styles}
         >
-          <img src={displaySignIn} alt="sign-in-photo" />
+          <img
+            src={displaySignIn}
+            alt="sign-in-photo"
+            backgroundColor="white"
+          />
         </Col>
       </Row>
     </Container>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
@@ -16,6 +16,7 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router";
 import displaySignIn from "../../../assets/displaySignIn.png";
+import { ThemeContext } from "../../../utils/ThemeContext";
 const SignUp = () => {
   const defaultFormField = {
     Name: "",
@@ -63,8 +64,13 @@ const SignUp = () => {
   const routeTosignIn = () => {
     navigate("/signin");
   };
+  const [{ theme }] = useContext(ThemeContext);
+  const styles = {
+    backgroundColor: theme.backgroundColor,
+    color: theme.color,
+  };
   return (
-    <Container className="container-signin" fluid>
+    <Container className="container-signin" fluid style={styles}>
       <Row className="h-100 w-100">
         <Col
           className="h-100 justify-content-center d-flex align-items-center"
@@ -81,6 +87,7 @@ const SignUp = () => {
                 <FormGroup className="m-5">
                   <Label>Name</Label>
                   <Input
+                    style={styles}
                     id="name"
                     name="Name"
                     placeholder="Name"
@@ -91,6 +98,7 @@ const SignUp = () => {
                 <FormGroup className="m-5">
                   <Label>Surname</Label>
                   <Input
+                    style={styles}
                     id="surname"
                     name="surname"
                     placeholder="Surname"
@@ -101,6 +109,7 @@ const SignUp = () => {
                 <FormGroup className="m-5">
                   <Label for="exampleEmail">Email</Label>
                   <Input
+                    style={styles}
                     type="email"
                     name="email"
                     id="exampleEmail"
@@ -112,6 +121,7 @@ const SignUp = () => {
                 <FormGroup className="m-5">
                   <Label for="SetPassword">Create Password</Label>
                   <Input
+                    style={styles}
                     type="password"
                     name="setPassword"
                     id="setPassword"
@@ -123,6 +133,7 @@ const SignUp = () => {
                 <FormGroup className="m-5">
                   <Label for="ConfirmPassword">Confirm Password</Label>
                   <Input
+                    style={styles}
                     type="password"
                     name="ConfirmPassword"
                     id="ConfirmPassword"
@@ -158,6 +169,7 @@ const SignUp = () => {
         <Col
           className="display-signin h-100  justify-content-center d-flex align-items-center"
           sm={8}
+          style={styles}
         >
           <img src={displaySignIn} alt="sign-in-photo" />
         </Col>

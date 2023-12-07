@@ -31,6 +31,10 @@ const Notes = () => {
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
   const [{ theme, isDark }, toggleTheme] = useContext(ThemeContext);
+  const styles = {
+    backgroundColor: theme.backgroundColor,
+    color: theme.color,
+  };
   const fetchingData = async () => {
     const fetchedData = await fetchFirebaseNote();
     if ("note" in fetchedData) {
@@ -109,12 +113,8 @@ const Notes = () => {
     setNote(abc);
     createFirbaseNote(abc);
   };
-  const styles = {
-    backgroundColor: theme.backgroundColor,
-    color: theme.color,
-  };
   return (
-    <div className="profile-container">
+    <div className="profile-container" style={styles}>
       <NavigationBar name={heading} />
       {note.length === 0 ? (
         <Row className="h-100">
@@ -127,7 +127,7 @@ const Notes = () => {
       ) : (
         <>
           <Row className="h-100">
-            <Col sm={3} className="border border-5  " style={styles}>
+            <Col sm={3} className="border border-5  ">
               <div className="justify-content-between d-flex">
                 <h2>Notes name</h2>
 
@@ -152,7 +152,7 @@ const Notes = () => {
               </div>
             </Col>
 
-            <Col sm={9} style={styles}>
+            <Col sm={9}>
               create your notes
               <Input
                 style={styles}

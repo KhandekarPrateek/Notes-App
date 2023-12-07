@@ -10,6 +10,7 @@ import {
   fetchFirebaseNote,
   handleUID,
 } from "../../utils/firebase/firebase";
+import EditorTinyMce from "../../utils/EditorTinyMce/index";
 
 import { createFirbaseNote } from "../../utils/firebase/firebase";
 import { ThemeContext } from "../../utils/ThemeContext";
@@ -154,6 +155,7 @@ const Notes = () => {
 
             <Col sm={9}>
               create your notes
+              {/* <EditorTinyMce /> */}
               <Input
                 style={styles}
                 name="noteHeader"

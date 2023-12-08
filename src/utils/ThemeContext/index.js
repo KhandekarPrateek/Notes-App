@@ -20,16 +20,13 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem("theme", JSON.stringify(!isDark));
     setIsDark(!isDark);
   };
-  console.log(isDark);
 
   useEffect(() => {
     const isDark = localStorage.getItem("theme") === "true";
-    console.log(isDark, "useEffect");
+
     setIsDark(isDark);
   }, []);
-  const foo = localStorage.getItem("isDark");
-  console.log(foo, "local storage");
-  console.log(isDark, "dark");
+
   return (
     <ThemeContext.Provider value={[{ theme, isDark }, toggleTheme]}>
       {children}

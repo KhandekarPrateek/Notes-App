@@ -5,10 +5,12 @@ import SignUp from "./pages/OnboardPage/SignUp";
 import DashBoard from "./pages/DashBoard";
 import Profile from "./pages/Profile";
 import NotesName from "./pages/DashBoard/NotesName";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
     <div>
+      <ToastContainer />
       <Routes>
         <Route path="/">
           <Route path="signin" element={<SignIn />} />

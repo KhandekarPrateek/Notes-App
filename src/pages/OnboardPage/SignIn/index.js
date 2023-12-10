@@ -19,6 +19,8 @@ import {
   getData,
 } from "../../../utils/firebase/firebase";
 import { ThemeContext } from "../../../utils/ThemeContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const SignIn = () => {
   const defaultFormFields = {
     email: "",
@@ -58,7 +60,9 @@ const SignIn = () => {
       navigateToDashboard(user);
     } catch (error) {
       if (error.code === "auth/popup-closed-by-user") {
-        alert("google popup faiilure");
+        toast.warning("google popup faiilure", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
     }
   };
@@ -90,12 +94,15 @@ const SignIn = () => {
       clearFormFields();
     } catch (error) {
       if (error.code === "auth/invalid-login-credentials") {
-        alert("enter correct password");
+        toast.error("enter correct password", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
       if (error.code === "auth/popup-closed-by-user") {
-        alert("Sign in via gmail or sign up otherwise");
+        toast.warning("Sign in via gmail or sign up otherwise", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       }
-      console.log(error, "error");
     }
   };
   const [{ theme }] = useContext(ThemeContext);

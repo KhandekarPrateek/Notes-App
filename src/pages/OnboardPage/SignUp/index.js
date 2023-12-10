@@ -17,6 +17,8 @@ import {
 import { useNavigate } from "react-router";
 import displaySignIn from "../../../assets/displaySignIn.png";
 import { ThemeContext } from "../../../utils/ThemeContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const SignUp = () => {
   const defaultFormField = {
     Name: "",
@@ -40,7 +42,9 @@ const SignUp = () => {
     event.preventDefault();
 
     if (setPassword !== ConfirmPassword) {
-      alert("passwords donot match");
+      toast.error("passwords donot match", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       return;
     }
     try {
@@ -49,12 +53,16 @@ const SignUp = () => {
         setPassword
       );
       await createUserDocumentFromUserAuth(user, { Name });
-      alert("Sign Up successful");
+      toast.success("Sign Up successful", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       routeTosignIn();
       clearFormFields();
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        alert("cannot create account with same email!!");
+        toast.warning("cannot create account with same email!!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       } else {
         console.log(error, "user creation unsucessful");
       }

@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   getAuth,
   signInWithPopup,
@@ -104,10 +106,15 @@ export const createNewPassword = (newPassword) => {
   const user = auth.currentUser;
   updatePassword(user, newPassword)
     .then(() => {
-      alert("password updated");
+      toast.success("password updated", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     })
     .catch((error) => {
       console.log(error.code, "error");
+      toast.error("Needs a fresh login to change password", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     });
 };
 

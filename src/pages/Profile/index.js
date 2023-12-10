@@ -1,20 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Col,
-  Container,
-  Form,
-  Row,
-  FormGroup,
-  Label,
-  Input,
-  Button,
-} from "reactstrap";
+import { Col, Form, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import profile from "../../assets/profile.png";
 import NavigationBar from "../../common/NavigationBar";
 import UserInfo from "./UserInfo";
 import { createNewPassword } from "../../utils/firebase/firebase";
 import { ThemeContext } from "../../utils/ThemeContext";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Profile = () => {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
@@ -43,7 +35,9 @@ const Profile = () => {
     if (setPassword === confirmPassword) {
       createNewPassword(setPassword);
     } else {
-      alert(" passwords donot match");
+      toast.error(" passwords donot match", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
   };
   const [{ theme }] = useContext(ThemeContext);

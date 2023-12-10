@@ -114,14 +114,13 @@ const Notes = () => {
 
   const handleEditorChange = (content) => {
     setContent(content);
-    console.log(content, "the state content");
   };
 
   return (
-    <div className="profile-container" style={styles}>
+    <div className="profile-container">
       <NavigationBar name={heading} />
       {note.length === 0 ? (
-        <Row className="h-100">
+        <Row className="h-100" style={styles}>
           <div className="d-flex align-items-center justify-content-center">
             <h1>You have no notes</h1>
 
@@ -130,8 +129,8 @@ const Notes = () => {
         </Row>
       ) : (
         <>
-          <Row className="h-100">
-            <Col sm={3} className="border border-5  ">
+          <Row className="h-100 " style={styles}>
+            <Col sm={3}>
               <div className="justify-content-between d-flex">
                 <h2>Notes name</h2>
 
@@ -171,14 +170,17 @@ const Notes = () => {
                 initialValue=""
                 apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
                 init={{
+                  height: "90vh",
                   skin: "oxide-dark",
 
                   content_css: "dark",
 
-                  plugins:
-                    "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-                  toolbar:
-                    "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                  plugins: "quickbars ",
+                  menubar: false,
+                  statusbar: false,
+                  toolbar: "quickbars",
+                  quickbars_selection_toolbar:
+                    " undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
                   tinycomments_mode: "embedded",
                   tinycomments_author: "Author name",
                   mergetags_list: [

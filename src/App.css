@@ -1,3 +1,13 @@
 @import "../src/styles/sign-in.css";
 @import "../src/styles/dashboard.css";
 @import "../src/styles/profile.css";
+
+/* .tox .tox-edit-area__iframe {
+  background-color: #c51d1d !important;
+  border: 0;
+  box-sizing: border-box;
+  flex: 1;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+} */

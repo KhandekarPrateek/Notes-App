@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Col, Container, Input, Row } from "reactstrap";
+import { Button, Col, Input, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
 import { IoMdAdd } from "react-icons/io";
@@ -10,7 +10,7 @@ import {
   fetchFirebaseNote,
   handleUID,
 } from "../../utils/firebase/firebase";
-import EditorTinyMce from "../../utils/EditorTinyMce/index";
+import { Editor } from "@tinymce/tinymce-react";
 
 import { createFirbaseNote } from "../../utils/firebase/firebase";
 import { ThemeContext } from "../../utils/ThemeContext";
@@ -31,7 +31,7 @@ const Notes = () => {
 
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
-  const [{ theme, isDark }, toggleTheme] = useContext(ThemeContext);
+  const [{ theme }] = useContext(ThemeContext);
   const styles = {
     backgroundColor: theme.backgroundColor,
     color: theme.color,
@@ -67,9 +67,6 @@ const Notes = () => {
 
   const handleNoteNameChange = (event) => {
     setHeading(event.target.value);
-  };
-  const handleNoteContentChange = (event) => {
-    setContent(event.target.value);
   };
 
   const openNoteBody = (num) => {
@@ -114,6 +111,12 @@ const Notes = () => {
     setNote(abc);
     createFirbaseNote(abc);
   };
+
+  const handleEditorChange = (content) => {
+    setContent(content);
+    console.log(content, "the state content");
+  };
+
   return (
     <div className="profile-container" style={styles}>
       <NavigationBar name={heading} />
@@ -155,7 +158,6 @@ const Notes = () => {
 
             <Col sm={9}>
               create your notes
-              {/* <EditorTinyMce /> */}
               <Input
                 style={styles}
                 name="noteHeader"
@@ -165,14 +167,31 @@ const Notes = () => {
                 value={heading}
               />
               Write Your notes
-              <Input
-                style={styles}
-                name="noteContent"
-                placeholder="Notes Content"
-                type="text"
-                onChange={handleNoteContentChange}
-                row={40}
+              <Editor
+                initialValue=""
+                apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
+                init={{
+                  skin: "oxide-dark",
+
+                  content_css: "dark",
+
+                  plugins:
+                    "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+                  toolbar:
+                    "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                  tinycomments_mode: "embedded",
+                  tinycomments_author: "Author name",
+                  mergetags_list: [
+                    { value: "First.Name", title: "First Name" },
+                    { value: "Email", title: "Email" },
+                  ],
+                  ai_request: (request, respondWith) =>
+                    respondWith.string(() =>
+                      Promise.reject("See docs to implement AI Assistant")
+                    ),
+                }}
                 value={content}
+                onEditorChange={handleEditorChange}
               />
             </Col>
           </Row>

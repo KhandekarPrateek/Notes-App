@@ -8,14 +8,14 @@ const NotesName = (props) => {
     <div>
       {note && (
         <div className="justify-content-between d-flex">
-          <h6
-            className="icon-cursor"
+          <h5
+            className="icon-cursor note-name"
             onClick={() => {
               openNoteBody(index);
             }}
           >
             {note}
-          </h6>
+          </h5>
           <div className="justify-content-end">
             <GrUpdate
               className="icon-cursor mx-2"

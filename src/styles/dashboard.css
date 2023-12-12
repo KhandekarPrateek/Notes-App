@@ -7,3 +7,11 @@
 .icon-cursor {
   cursor: pointer;
 }
+/* .note-name-heading {
+  outline: none !important;
+  border: none !important;
+} */
+.note-name {
+  overflow: hidden;
+  word-wrap: break-word;
+}

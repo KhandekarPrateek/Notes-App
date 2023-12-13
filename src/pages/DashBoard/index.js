@@ -142,7 +142,7 @@ const Notes = () => {
 
   return (
     <div className="profile-container">
-      <NavigationBar name={heading} />
+      <NavigationBar UUID={noteUUID} navNoteName={heading} />
       {note.length === 0 ? (
         <Row className="h-100" style={styles}>
           <div className="d-flex align-items-center justify-content-center">
@@ -191,9 +191,7 @@ const Notes = () => {
                 className="note-name-heading mb-5 mt-1 "
                 spellcheck="false"
               />
-              {console.log(content, "content")}
               <Editor
-                // initialValue={content}
                 apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
                 init={{
                   height: "80vh",

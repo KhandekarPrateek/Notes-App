@@ -19,7 +19,7 @@ import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../utils/ThemeContext";
 import { FaMoon, FaSun } from "react-icons/fa";
-const NavigationBar = ({ name }) => {
+const NavigationBar = ({ UUID, navNoteName }) => {
   const [Data, setParsedData] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -51,9 +51,9 @@ const NavigationBar = ({ name }) => {
           onClick={routeToDashboard}
         />
         <NavbarToggler onClick={toggle} />
-        {location.pathname === `/dashboard/${Data}/${name}` && (
+        {location.pathname === `/dashboard/${Data}/${UUID}` && (
           <NavbarText>
-            <h5>{name}</h5>
+            <h5>{navNoteName}</h5>
           </NavbarText>
         )}
         {location.pathname === `/dashboard/${Data}` && (

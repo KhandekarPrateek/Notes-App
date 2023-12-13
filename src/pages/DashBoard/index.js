@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
 import { IoMdAdd } from "react-icons/io";
 import NotesName from "./NotesName";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   auth,
   fetchFirebaseNote,
@@ -14,6 +14,7 @@ import { Editor } from "@tinymce/tinymce-react";
 
 import { createFirbaseNote } from "../../utils/firebase/firebase";
 import { ThemeContext } from "../../utils/ThemeContext";
+import { Helmet } from "react-helmet";
 const Notes = () => {
   useEffect(() => {
     handleUID();
@@ -26,11 +27,12 @@ const Notes = () => {
     noteContent: "Create Your own notes",
     noteImage: null,
   };
-
+  const storedData = localStorage.getItem("userInfo");
+  const parsedData = JSON.parse(storedData);
   const [note, setNote] = useState([]);
-
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
+  const [onClickUUID, setOnClickUUID] = useState("");
   const [{ theme }] = useContext(ThemeContext);
   const styles = {
     backgroundColor: theme.backgroundColor,
@@ -70,11 +72,10 @@ const Notes = () => {
   };
 
   const openNoteBody = (num) => {
-    const noteContentOnClick = note[num].noteContent;
-    const noteHeaderOnClick = note[num].noteHeader;
-
-    setHeading(noteHeaderOnClick);
-    setContent(noteContentOnClick);
+    const { noteContent, noteHeader, noteUUId } = note[num];
+    setHeading(noteHeader);
+    setContent(noteContent);
+    setOnClickUUID(noteUUId);
     navigateToNoteName(num);
   };
 
@@ -89,8 +90,6 @@ const Notes = () => {
     createFirbaseNote(abc);
     if (note.length > 0) {
       navigateToNoteName(0);
-    } else {
-      navigateToNoteName();
     }
   };
   const navigate = useNavigate();
@@ -100,7 +99,7 @@ const Notes = () => {
     if (note[num].noteHeader === null) {
       navigate(`/dashboard/${parsedData}`);
     } else {
-      navigate(`/dashboard/${parsedData}/${note[num].noteHeader}`);
+      navigate(`/dashboard/${parsedData}/${note[num].noteUUId}`);
     }
   };
 
@@ -115,6 +114,31 @@ const Notes = () => {
   const handleEditorChange = (content) => {
     setContent(content);
   };
+  const { noteUUID } = useParams();
+
+  const BlogPost = () => {
+    let flag = null;
+    note.map((element) => {
+      const { noteUUId, noteHeader, noteContent } = element;
+      if (noteUUId === noteUUID) {
+        setHeading(noteHeader);
+        setContent(noteContent);
+        return (flag = true);
+      } else if (onClickUUID === noteUUId) {
+        navigate(`/dashboard/${parsedData}/${onClickUUID}`);
+        return (flag = true);
+      }
+      if (flag === false) {
+        navigate(`/dashboard/${parsedData}`);
+      }
+    });
+  };
+  useEffect(() => {
+    BlogPost();
+  }, []);
+  useEffect(() => {
+    BlogPost();
+  }, [note, noteUUID]);
 
   return (
     <div className="profile-container">
@@ -156,7 +180,6 @@ const Notes = () => {
             </Col>
 
             <Col sm={9}>
-              create your notes
               <Input
                 style={styles}
                 name="noteHeader"
@@ -164,13 +187,16 @@ const Notes = () => {
                 type="text"
                 onChange={handleNoteNameChange}
                 value={heading}
+                bsSize="lg"
+                className="note-name-heading mb-5 mt-1 "
+                spellcheck="false"
               />
-              Write Your notes
+              {console.log(content, "content")}
               <Editor
-                initialValue=""
+                // initialValue={content}
                 apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
                 init={{
-                  height: "90vh",
+                  height: "80vh",
                   skin: "oxide-dark",
 
                   content_css: "dark",

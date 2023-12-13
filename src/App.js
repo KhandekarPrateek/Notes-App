@@ -16,7 +16,7 @@ function App() {
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
           <Route path="dashboard/:displayName" element={<DashBoard />}>
-            <Route path=":noteName" element={<NotesName />} />
+            <Route path=":noteUUID" element={<NotesName />} />
           </Route>
           <Route path="profile/:displayName" element={<Profile />} />
         </Route>

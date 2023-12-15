@@ -105,11 +105,6 @@ const SignIn = () => {
       }
     }
   };
-  const [{ theme }] = useContext(ThemeContext);
-  const styles = {
-    backgroundColor: theme.backgroundColor,
-    color: theme.color,
-  };
 
   return (
     <>

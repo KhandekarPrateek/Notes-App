@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Col, Form, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import profile from "../../assets/profile.png";
 import NavigationBar from "../../common/NavigationBar";
 import UserInfo from "./UserInfo";
 import { createNewPassword } from "../../utils/firebase/firebase";
-import { ThemeContext } from "../../utils/ThemeContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const Profile = () => {
@@ -40,11 +39,7 @@ const Profile = () => {
       });
     }
   };
-  const [{ theme }] = useContext(ThemeContext);
-  const styles = {
-    backgroundColor: theme.backgroundColor,
-    color: theme.color,
-  };
+
   return (
     <Row className="profile-container">
       <NavigationBar />

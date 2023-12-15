@@ -16,7 +16,6 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router";
 import displaySignIn from "../../../assets/displaySignIn.png";
-import { ThemeContext } from "../../../utils/ThemeContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const SignUp = () => {
@@ -72,11 +71,7 @@ const SignUp = () => {
   const routeTosignIn = () => {
     navigate("/signin");
   };
-  const [{ theme }] = useContext(ThemeContext);
-  const styles = {
-    backgroundColor: theme.backgroundColor,
-    color: theme.color,
-  };
+
   return (
     <Container className="container-signin" fluid>
       <Row className="h-100 w-100">

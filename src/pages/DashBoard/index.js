@@ -32,11 +32,7 @@ const Notes = () => {
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
   const [onClickUUID, setOnClickUUID] = useState("");
-  const [{ theme }] = useContext(ThemeContext);
-  const styles = {
-    backgroundColor: theme.backgroundColor,
-    color: theme.color,
-  };
+
   const fetchingData = async () => {
     const fetchedData = await fetchFirebaseNote();
     if ("note" in fetchedData) {
@@ -193,9 +189,6 @@ const Notes = () => {
                 apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
                 init={{
                   height: "80vh",
-                  // skin: "oxide-dark",
-
-                  // content_css: "dark",
                   placeholder: "Start typing ",
                   plugins: "quickbars ",
                   menubar: false,

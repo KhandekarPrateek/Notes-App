@@ -12,8 +12,6 @@ import {
   NavItem,
   NavLink,
   NavbarText,
-  Button,
-  Input,
 } from "reactstrap";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
@@ -40,7 +38,7 @@ const NavigationBar = ({ UUID, navNoteName }) => {
   const routeToProfile = () => {
     navigate(`/profile/${Data}`);
   };
-  const [{ theme, isDark }, toggleTheme] = useContext(ThemeContext);
+  const [{ isDark }, toggleTheme] = useContext(ThemeContext);
 
   return (
     <div>

@@ -1,9 +1,9 @@
 body {
-  background-color: rgb(255, 0, 0) !important;
+  background-color: white !important;
   color: black !important;
 }
 .tox .tox-edit-area__iframe {
-  background-color: rgb(255, 0, 0) !important;
+  background-color: white !important;
   border: 0;
   box-sizing: border-box;
   flex: 1;

@@ -110,96 +110,96 @@ const SignIn = () => {
     backgroundColor: theme.backgroundColor,
     color: theme.color,
   };
+
   return (
-    <Container className="container-signin" fluid style={styles}>
-      <Row className="h-100 w-100">
-        <Col
-          className="h-100 justify-content-center d-flex align-items-center"
-          sm={4}
-        >
-          <div className="w-100">
-            <Row>
-              <h2 className="m-5">Sign in to your account</h2>
-            </Row>
-            <Row>
-              <Form>
-                <FormGroup className="m-5">
-                  <Label for="exampleEmail">Email</Label>
-                  <Input
-                    style={styles}
-                    type="email"
-                    name="email"
-                    id="exampleEmail"
-                    placeholder="Email"
-                    onChange={handleChangeSignIn}
-                  />
-                </FormGroup>
-                <FormGroup className="m-5">
-                  <Label for="password">Password</Label>
-                  <Input
-                    style={styles}
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="password "
-                    onChange={handleChangeSignIn}
-                  />
-                </FormGroup>
-                <h6 className="justify-content-end d-flex mt-2">
-                  Forgot password?
-                </h6>
-              </Form>
-              <div className=" justify-content-center d-flex">
+    <>
+      <Container className="container-signin" fluid>
+        <Row className="h-100 w-100">
+          <Col
+            className="h-100 justify-content-center d-flex align-items-center"
+            sm={4}
+          >
+            <div className="w-100">
+              <Row>
+                <h2 className="m-5">Sign in to your account</h2>
+              </Row>
+              <Row>
+                <Form>
+                  <FormGroup className="m-5">
+                    <Label for="exampleEmail">Email</Label>
+                    <Input
+                      type="email"
+                      name="email"
+                      id="exampleEmail"
+                      placeholder="Email"
+                      onChange={handleChangeSignIn}
+                    />
+                  </FormGroup>
+                  <FormGroup className="m-5">
+                    <Label for="password">Password</Label>
+                    <Input
+                      type="password"
+                      name="password"
+                      id="password"
+                      placeholder="password "
+                      onChange={handleChangeSignIn}
+                    />
+                  </FormGroup>
+                  <h6 className="justify-content-end d-flex mt-2">
+                    Forgot password?
+                  </h6>
+                </Form>
+                <div className=" justify-content-center d-flex">
+                  <Row>
+                    <Button
+                      type="button"
+                      className="button-signin mt-4"
+                      onClick={logWithGoogleUser}
+                    >
+                      Google sign in
+                    </Button>
+                  </Row>
+                </div>
                 <Row>
-                  <Button
-                    type="button"
-                    className="button-signin mt-4"
-                    onClick={logWithGoogleUser}
-                  >
-                    Google sign in
-                  </Button>
+                  <div className=" justify-content-center d-flex">
+                    <Button
+                      className="button-signup mt-4"
+                      outline
+                      onClick={handleEmailAndPasswordSignIn}
+                    >
+                      {" "}
+                      Sign-in
+                    </Button>
+                  </div>
                 </Row>
-              </div>
-              <Row>
-                <div className=" justify-content-center d-flex">
-                  <Button
-                    className="button-signup mt-4"
-                    outline
-                    onClick={handleEmailAndPasswordSignIn}
-                  >
-                    {" "}
-                    Sign-in
-                  </Button>
-                </div>
+                <Row>
+                  <div className=" justify-content-center d-flex">
+                    <Button
+                      className="button-signup mt-4"
+                      outline
+                      onClick={routeTosignUp}
+                    >
+                      {" "}
+                      Sign-up
+                    </Button>
+                  </div>
+                </Row>
               </Row>
-              <Row>
-                <div className=" justify-content-center d-flex">
-                  <Button
-                    className="button-signup mt-4"
-                    outline
-                    onClick={routeTosignUp}
-                  >
-                    {" "}
-                    Sign-up
-                  </Button>
-                </div>
-              </Row>
-            </Row>
-          </div>
-        </Col>
-        <Col
-          className="display-signin h-100  justify-content-center d-flex align-items-center"
-          sm={8}
-          style={styles}
-        >
-          <img
-            src={displaySignIn}
-            alt="sign-in-photo"
-            backgroundColor="white"
-          />
-        </Col>
-      </Row>
-    </Container>
+            </div>
+          </Col>
+          <Col
+            className="display-signin h-100  justify-content-center d-flex align-items-center"
+            sm={8}
+          >
+            <img
+              src={displaySignIn}
+              alt="sign-in-photo"
+              backgroundColor="white"
+            />
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 };
 

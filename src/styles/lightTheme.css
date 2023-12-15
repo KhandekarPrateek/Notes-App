@@ -1,0 +1,13 @@
+body {
+  background-color: white !important;
+  color: black !important;
+}
+.tox .tox-edit-area__iframe {
+  background-color: white !important;
+  border: 0;
+  box-sizing: border-box;
+  flex: 1;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}

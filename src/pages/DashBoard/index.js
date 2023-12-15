@@ -14,7 +14,6 @@ import { Editor } from "@tinymce/tinymce-react";
 
 import { createFirbaseNote } from "../../utils/firebase/firebase";
 import { ThemeContext } from "../../utils/ThemeContext";
-import { Helmet } from "react-helmet";
 const Notes = () => {
   useEffect(() => {
     handleUID();
@@ -144,7 +143,7 @@ const Notes = () => {
     <div className="profile-container">
       <NavigationBar UUID={noteUUID} navNoteName={heading} />
       {note.length === 0 ? (
-        <Row className="h-100" style={styles}>
+        <Row className="h-100">
           <div className="d-flex align-items-center justify-content-center">
             <h1>You have no notes</h1>
 
@@ -153,7 +152,7 @@ const Notes = () => {
         </Row>
       ) : (
         <>
-          <Row className="h-100 " style={styles}>
+          <Row className="h-100 ">
             <Col sm={3}>
               <div className="justify-content-between d-flex">
                 <h2>Notes name</h2>
@@ -181,7 +180,6 @@ const Notes = () => {
 
             <Col sm={9}>
               <Input
-                style={styles}
                 name="noteHeader"
                 placeholder="Notes heading"
                 type="text"
@@ -195,10 +193,10 @@ const Notes = () => {
                 apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
                 init={{
                   height: "80vh",
-                  skin: "oxide-dark",
+                  // skin: "oxide-dark",
 
-                  content_css: "dark",
-
+                  // content_css: "dark",
+                  placeholder: "Start typing ",
                   plugins: "quickbars ",
                   menubar: false,
                   statusbar: false,

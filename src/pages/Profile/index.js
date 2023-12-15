@@ -46,7 +46,7 @@ const Profile = () => {
     color: theme.color,
   };
   return (
-    <Row className="profile-container" style={styles}>
+    <Row className="profile-container">
       <NavigationBar />
       <Col sm={6} className="d-flex align-items-center ">
         <img src={profile} alt="profile-image" />{" "}
@@ -64,7 +64,6 @@ const Profile = () => {
             <FormGroup className="my-5">
               <Label for="setPassword">Create Password</Label>
               <Input
-                style={styles}
                 type="password"
                 name="setPassword"
                 id="SetPassword"
@@ -75,7 +74,6 @@ const Profile = () => {
             <FormGroup className="my-5">
               <Label for="confirmPassword">Confirm Password</Label>
               <Input
-                style={styles}
                 type="password"
                 name="confirmPassword"
                 id="confirmPassword"

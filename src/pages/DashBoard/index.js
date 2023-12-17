@@ -134,6 +134,29 @@ const Notes = () => {
   useEffect(() => {
     BlogPost();
   }, [note, noteUUID]);
+  const [{ isDark }] = useContext(ThemeContext);
+  const foo = () => {
+    try {
+      console.log("useEffect");
+      const iframe = document.querySelector("iframe").contentWindow;
+      if (isDark) {
+        console.log("if");
+        iframe.document.querySelector("body").style.color = "white";
+      } else {
+        iframe.document.querySelector("body").style.color = "black";
+      }
+    } catch (e) {
+      console.log("iframe error");
+    }
+  };
+  useEffect(() => {
+    console.log("empty");
+    foo();
+  }, []);
+  useEffect(() => {
+    console.log("isDark");
+    foo();
+  }, [isDark]);
 
   return (
     <div className="profile-container">
@@ -188,6 +211,7 @@ const Notes = () => {
               <Editor
                 apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
                 init={{
+                  selector: "textarea",
                   height: "80vh",
                   placeholder: "Start typing ",
                   plugins: "quickbars ",

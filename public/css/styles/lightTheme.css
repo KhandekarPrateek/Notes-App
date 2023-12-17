@@ -11,3 +11,17 @@ body {
   position: absolute;
   width: 100%;
 }
+
+.tox .tox-editor-header {
+  background-color: white !important;
+  color: black !important;
+}
+.mce-content-body {
+  color: black !important;
+}
+.icon-cursor {
+  color: black !important;
+}
+.navbar-text {
+  color: black !important;
+}

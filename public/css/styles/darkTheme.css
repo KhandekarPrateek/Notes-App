@@ -11,3 +11,29 @@ body {
   position: absolute;
   width: 100%;
 }
+
+.tox .tox-editor-header {
+  background-color: #202124 !important;
+  color: #ffffff !important;
+}
+.icon-cursor {
+  color: white !important;
+}
+.navbar-text {
+  color: white !important;
+}
+.note-name-heading {
+  background-color: #202124;
+}
+.mce-content-body {
+  color: #ffffff !important;
+}
+.form-control {
+  background-color: #202124 !important;
+  color: white !important;
+}
+.mce-content-body {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  color: white !important;
+}

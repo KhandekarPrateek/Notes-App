@@ -42,7 +42,7 @@ const NavigationBar = ({ UUID, navNoteName }) => {
 
   return (
     <div>
-      <Navbar color="dark" light expand="md" dark>
+      <Navbar expand="md">
         <GiNotebook
           size={35}
           className="mx-3 text-light  icon-cursor"

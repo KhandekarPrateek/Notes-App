@@ -136,7 +136,22 @@ const Notes = () => {
   }, [note, noteUUID]);
   const [{ isDark }] = useContext(ThemeContext);
   const foo = () => {
+    console.log("foo");
     if (document.querySelector("iframe")) {
+      const iframe1 = document.querySelector("iframe").contentDocument;
+      const styleTag = iframe1.createElement("style");
+      const cssRules = `
+        .mce-content-body:not([dir=rtl])[data-mce-placeholder]:not(.mce-visualblocks)::before {
+          color: ${isDark ? "white" : "black"};
+        }
+      `;
+      styleTag.appendChild(iframe1.createTextNode(cssRules));
+      iframe1.head.appendChild(styleTag);
+    }
+  };
+  const tinyMceIframeFunc = () => {
+    if (document.querySelector("iframe")) {
+      console.log("func");
       const iframe = document.querySelector("iframe").contentWindow;
       if (isDark) {
         iframe.document.querySelector("body").style.color = "white";
@@ -145,8 +160,13 @@ const Notes = () => {
       }
     }
   };
-  useEffect(() => {
+  const iframeFunc = () => {
     foo();
+    tinyMceIframeFunc();
+  };
+
+  useEffect(() => {
+    iframeFunc();
   }, [isDark]);
   return (
     <div className="profile-container">
@@ -202,7 +222,7 @@ const Notes = () => {
                 <Editor
                   apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
                   init={{
-                    onInit: foo(),
+                    onInit: iframeFunc(),
                     selector: "textarea",
                     height: "100vh",
                     placeholder: "Start typing ",

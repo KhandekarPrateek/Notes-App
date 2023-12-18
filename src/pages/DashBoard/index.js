@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Button, Col, Input, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
@@ -136,28 +136,18 @@ const Notes = () => {
   }, [note, noteUUID]);
   const [{ isDark }] = useContext(ThemeContext);
   const foo = () => {
-    try {
-      console.log("useEffect");
+    if (document.querySelector("iframe")) {
       const iframe = document.querySelector("iframe").contentWindow;
       if (isDark) {
-        console.log("if");
         iframe.document.querySelector("body").style.color = "white";
       } else {
         iframe.document.querySelector("body").style.color = "black";
       }
-    } catch (e) {
-      console.log("iframe error");
     }
   };
   useEffect(() => {
-    console.log("empty");
-    foo();
-  }, []);
-  useEffect(() => {
-    console.log("isDark");
     foo();
   }, [isDark]);
-
   return (
     <div className="profile-container">
       <NavigationBar UUID={noteUUID} navNoteName={heading} />
@@ -208,32 +198,35 @@ const Notes = () => {
                 className="note-name-heading mb-5 mt-1 "
                 spellcheck="false"
               />
-              <Editor
-                apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
-                init={{
-                  selector: "textarea",
-                  height: "80vh",
-                  placeholder: "Start typing ",
-                  plugins: "quickbars ",
-                  menubar: false,
-                  statusbar: false,
-                  toolbar: "quickbars",
-                  quickbars_selection_toolbar:
-                    " undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                  tinycomments_mode: "embedded",
-                  tinycomments_author: "Author name",
-                  mergetags_list: [
-                    { value: "First.Name", title: "First Name" },
-                    { value: "Email", title: "Email" },
-                  ],
-                  ai_request: (request, respondWith) =>
-                    respondWith.string(() =>
-                      Promise.reject("See docs to implement AI Assistant")
-                    ),
-                }}
-                value={content}
-                onEditorChange={handleEditorChange}
-              />
+              <div className="border border-5">
+                <Editor
+                  apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
+                  init={{
+                    onInit: foo(),
+                    selector: "textarea",
+                    height: "100vh",
+                    placeholder: "Start typing ",
+                    plugins: "quickbars ",
+                    menubar: false,
+                    statusbar: false,
+                    toolbar: "quickbars",
+                    quickbars_selection_toolbar:
+                      " undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+                    tinycomments_mode: "embedded",
+                    tinycomments_author: "Author name",
+                    mergetags_list: [
+                      { value: "First.Name", title: "First Name" },
+                      { value: "Email", title: "Email" },
+                    ],
+                    ai_request: (request, respondWith) =>
+                      respondWith.string(() =>
+                        Promise.reject("See docs to implement AI Assistant")
+                      ),
+                  }}
+                  value={content}
+                  onEditorChange={handleEditorChange}
+                />
+              </div>
             </Col>
           </Row>
         </>

@@ -32,8 +32,3 @@ body {
   background-color: #202124 !important;
   color: white !important;
 }
-.mce-content-body {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  color: white !important;
-}

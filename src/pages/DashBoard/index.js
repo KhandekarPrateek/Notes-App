@@ -14,6 +14,8 @@ import { Editor } from "@tinymce/tinymce-react";
 
 import { createFirbaseNote } from "../../utils/firebase/firebase";
 import { ThemeContext } from "../../utils/ThemeContext";
+import { toast } from "react-toastify";
+import TinyMceEditor from "./Editor";
 const Notes = () => {
   useEffect(() => {
     handleUID();
@@ -60,6 +62,9 @@ const Notes = () => {
       return element.noteHeader !== "";
     });
     createFirbaseNote(result);
+    toast.success("Note added", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   const handleNoteNameChange = (event) => {
@@ -86,6 +91,9 @@ const Notes = () => {
     if (note.length > 0) {
       navigateToNoteName(0);
     }
+    toast.success("Note deleted", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
   const navigate = useNavigate();
   const navigateToNoteName = (num) => {
@@ -104,6 +112,9 @@ const Notes = () => {
     const abc = note;
     setNote(abc);
     createFirbaseNote(abc);
+    toast.success("Note updated", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
   };
 
   const handleEditorChange = (content) => {
@@ -168,87 +179,76 @@ const Notes = () => {
   useEffect(() => {
     iframeFunc();
   }, [isDark]);
+  const [openNoteContainer, setopenNoteContainer] = useState(true);
+  const togglePageSizeChange = (oldopenNoteContainer) => {
+    setopenNoteContainer(!oldopenNoteContainer);
+  };
   return (
     <div className="profile-container">
-      <NavigationBar UUID={noteUUID} navNoteName={heading} />
-      {note.length === 0 ? (
-        <Row className="h-100">
-          <div className="d-flex align-items-center justify-content-center">
-            <h1>You have no notes</h1>
+      {openNoteContainer ? (
+        <>
+          <Row className="d-flex justify-content-end">
+            <Col sm={9}>
+              <div>
+                <NavigationBar
+                  UUID={noteUUID}
+                  navNoteName={heading}
+                  openNoteContainer={openNoteContainer}
+                  createNewNote={createNewNote}
+                  togglePageSizeChange={togglePageSizeChange}
+                />
+              </div>
+            </Col>
 
-            <Button onClick={createNewNote}>Create a note</Button>
-          </div>
-        </Row>
+            <Row className="h-75">
+              <Col sm={3}>
+                <div className="justify-content-between d-flex">
+                  <h3 className="justify-content-center d-flex">All notes</h3>
+                </div>
+                <div>
+                  {note.map((e, index) => {
+                    return (
+                      <NotesName
+                        note={e.noteHeader}
+                        index={index}
+                        openNoteBody={openNoteBody}
+                        removeNote={removeNote}
+                        updateNote={updateNote}
+                      />
+                    );
+                  })}
+                </div>
+              </Col>
+              <Col sm={9} className="justify-content-end ">
+                <TinyMceEditor
+                  handleNoteNameChange={handleNoteNameChange}
+                  heading={heading}
+                  iframeFunc={iframeFunc}
+                  content={content}
+                  handleEditorChange={handleEditorChange}
+                />
+              </Col>
+            </Row>
+          </Row>
+        </>
       ) : (
         <>
-          <Row className="h-100 ">
-            <Col sm={3}>
-              <div className="justify-content-between d-flex">
-                <h2>Notes name</h2>
-
-                <IoMdAdd
-                  onClick={createNewNote}
-                  size={35}
-                  className="icon-cursor"
-                />
-              </div>
-              <div>
-                {note.map((e, index) => {
-                  return (
-                    <NotesName
-                      note={e.noteHeader}
-                      index={index}
-                      openNoteBody={openNoteBody}
-                      removeNote={removeNote}
-                      updateNote={updateNote}
-                    />
-                  );
-                })}
-              </div>
-            </Col>
-
-            <Col sm={9}>
-              <Input
-                name="noteHeader"
-                placeholder="Notes heading"
-                type="text"
-                onChange={handleNoteNameChange}
-                value={heading}
-                bsSize="lg"
-                className="note-name-heading mb-5 mt-1 "
-                spellcheck="false"
-              />
-              <div className="border border-5">
-                <Editor
-                  apiKey="ombdk1krkq3vmtykx179vu7b26gg0slrgm6ckwvc70b6pb7y"
-                  init={{
-                    onInit: iframeFunc(),
-                    selector: "textarea",
-                    height: "100vh",
-                    placeholder: "Start typing ",
-                    plugins: "quickbars ",
-                    menubar: false,
-                    statusbar: false,
-                    toolbar: "quickbars",
-                    quickbars_selection_toolbar:
-                      " undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-                    tinycomments_mode: "embedded",
-                    tinycomments_author: "Author name",
-                    mergetags_list: [
-                      { value: "First.Name", title: "First Name" },
-                      { value: "Email", title: "Email" },
-                    ],
-                    ai_request: (request, respondWith) =>
-                      respondWith.string(() =>
-                        Promise.reject("See docs to implement AI Assistant")
-                      ),
-                  }}
-                  value={content}
-                  onEditorChange={handleEditorChange}
-                />
-              </div>
-            </Col>
-          </Row>
+          <div>
+            <NavigationBar
+              UUID={noteUUID}
+              navNoteName={heading}
+              openNoteContainer={openNoteContainer}
+              createNewNote={createNewNote}
+              togglePageSizeChange={togglePageSizeChange}
+            />
+          </div>
+          <TinyMceEditor
+            handleNoteNameChange={handleNoteNameChange}
+            heading={heading}
+            iframeFunc={iframeFunc}
+            content={content}
+            handleEditorChange={handleEditorChange}
+          />
         </>
       )}
     </div>

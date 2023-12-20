@@ -1,21 +1,18 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { Button, Col, Input, Row } from "reactstrap";
+import React, { useContext, useEffect, useState } from "react";
+import { Col, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
-import { IoMdAdd } from "react-icons/io";
-import NotesName from "./NotesName";
 import { useNavigate, useParams } from "react-router";
 import {
   auth,
   fetchFirebaseNote,
   handleUID,
 } from "../../utils/firebase/firebase";
-import { Editor } from "@tinymce/tinymce-react";
-
 import { createFirbaseNote } from "../../utils/firebase/firebase";
 import { ThemeContext } from "../../utils/ThemeContext";
 import { toast } from "react-toastify";
 import TinyMceEditor from "./Editor";
+import NoteTab from "./NoteTab";
 const Notes = () => {
   useEffect(() => {
     handleUID();
@@ -187,7 +184,15 @@ const Notes = () => {
     <div className="profile-container">
       {openNoteContainer ? (
         <>
-          <Row className="d-flex justify-content-end">
+          <Row className="d-flex justify-content-end g-0 ">
+            <Col
+              sm={3}
+              className="justify-content-center d-flex align-items-center border-bottom border-end g-0"
+            >
+              <div>
+                <h3>All notes</h3>
+              </div>
+            </Col>
             <Col sm={9}>
               <div>
                 <NavigationBar
@@ -200,24 +205,14 @@ const Notes = () => {
               </div>
             </Col>
 
-            <Row className="h-75">
+            <Row className="g-0">
               <Col sm={3}>
-                <div className="justify-content-between d-flex">
-                  <h3 className="justify-content-center d-flex">All notes</h3>
-                </div>
-                <div>
-                  {note.map((e, index) => {
-                    return (
-                      <NotesName
-                        note={e.noteHeader}
-                        index={index}
-                        openNoteBody={openNoteBody}
-                        removeNote={removeNote}
-                        updateNote={updateNote}
-                      />
-                    );
-                  })}
-                </div>
+                <NoteTab
+                  noteArray={note}
+                  openNoteBody={openNoteBody}
+                  removeNote={removeNote}
+                  updateNote={updateNote}
+                />
               </Col>
               <Col sm={9} className="justify-content-end ">
                 <TinyMceEditor

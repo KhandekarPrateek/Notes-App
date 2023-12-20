@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { CgTrash } from "react-icons/cg";
 import { GrUpdate } from "react-icons/gr";
 import { Row } from "reactstrap";
 
 const NoteTab = ({ noteArray, openNoteBody, updateNote, removeNote }) => {
+  const [divBg, setDivBg] = useState();
+
+  const noteNameHighlight = () => {
+    // setDivBg();
+    console.log("hellio");
+  };
+
   return (
     <div className="profile-container">
-      <Row className="h-100 border-end g-0 vstack gap-0">
+      <Row className="h-100 border-end g-0 vstack gap-0 dashboard-border">
         {noteArray.map((e, index) => {
           const { noteHeader } = e;
           return (
             <>
               {noteHeader && (
-                <div className="note-name-row border-bottom  ">
+                <div
+                  className="note-name-row border-bottom dashboard-border"
+                  onMouseEnter={noteNameHighlight}
+                >
                   <div className="justify-content-between d-flex">
                     <div className="align-items-center d-flex">
                       <h5

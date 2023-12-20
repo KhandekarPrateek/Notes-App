@@ -32,3 +32,6 @@ body {
   background-color: #202124 !important;
   color: white !important;
 }
+.dashboard-border {
+  border-color: #2c3338 !important;
+}

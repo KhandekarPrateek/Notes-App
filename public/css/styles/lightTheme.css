@@ -25,3 +25,6 @@ body {
 .navbar-text {
   color: black !important;
 }
+.dashboard-border {
+  border-color: #dcdcde !important;
+}

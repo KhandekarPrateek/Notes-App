@@ -23,8 +23,6 @@ import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../utils/ThemeContext";
 import { FaMoon, FaSun } from "react-icons/fa";
 const NavigationBar = ({
-  UUID,
-  navNoteName,
   openNoteContainer,
   createNewNote,
   togglePageSizeChange,
@@ -50,12 +48,11 @@ const NavigationBar = ({
     navigate(`/profile/${Data}`);
   };
   const [{ isDark }, toggleTheme] = useContext(ThemeContext);
-
   return (
     <Container fluid>
       <Row>
-        <Col className="border-bottom ">
-          <Navbar expand="md">
+        <Col className="border-bottom dashboard-border">
+          <Navbar expand="md" className="navbar-rules">
             {location.pathname === `/profile/${Data}` && (
                 <NavbarText>
                   <h5>Go to dashboard</h5>

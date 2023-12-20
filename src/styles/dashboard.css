@@ -15,3 +15,6 @@
   overflow: hidden;
   word-wrap: break-word;
 }
+.tox-tinymce {
+  border: none !important;
+}

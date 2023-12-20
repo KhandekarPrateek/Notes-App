@@ -187,9 +187,9 @@ const Notes = () => {
           <Row className="d-flex justify-content-end g-0 ">
             <Col
               sm={3}
-              className="justify-content-center d-flex align-items-center border-bottom border-end g-0"
+              className="justify-content-center d-flex align-items-center border-bottom border-end g-0 dashboard-border "
             >
-              <div>
+              <div className="navbar-rules">
                 <h3>All notes</h3>
               </div>
             </Col>

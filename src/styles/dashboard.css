@@ -10,10 +10,9 @@
 .note-name-heading {
   outline: none !important;
   border: none !important;
-}
-.form-control {
   font-size: 2rem !important;
 }
+
 .form-control:focus {
   box-shadow: none !important;
 }

@@ -144,7 +144,6 @@ const Notes = () => {
   }, [note, noteUUID]);
   const [{ isDark }] = useContext(ThemeContext);
   const foo = () => {
-    console.log("foo");
     if (document.querySelector("iframe")) {
       const iframe1 = document.querySelector("iframe").contentDocument;
       const styleTag = iframe1.createElement("style");
@@ -159,7 +158,6 @@ const Notes = () => {
   };
   const tinyMceIframeFunc = () => {
     if (document.querySelector("iframe")) {
-      console.log("func");
       const iframe = document.querySelector("iframe").contentWindow;
       if (isDark) {
         iframe.document.querySelector("body").style.color = "white";
@@ -212,6 +210,7 @@ const Notes = () => {
                   openNoteBody={openNoteBody}
                   removeNote={removeNote}
                   updateNote={updateNote}
+                  isDark={isDark}
                 />
               </Col>
               <Col sm={9} className="justify-content-end ">

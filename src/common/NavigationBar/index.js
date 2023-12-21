@@ -54,16 +54,17 @@ const NavigationBar = ({
         <Col className="border-bottom dashboard-border">
           <Navbar expand="md" className="navbar-rules">
             {location.pathname === `/profile/${Data}` && (
-                <NavbarText>
-                  <h5>Go to dashboard</h5>
-                </NavbarText>
-              ) && (
+              <>
                 <GiNotebook
                   size={35}
                   className="mx-3 text-light  icon-cursor"
                   onClick={routeToDashboard}
                 />
-              )}
+                <NavbarText>
+                  <h5>Go to dashboard</h5>
+                </NavbarText>
+              </>
+            )}
 
             <NavbarToggler onClick={toggle} />
 

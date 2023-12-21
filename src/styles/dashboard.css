@@ -24,3 +24,6 @@
 .tox-tinymce {
   border: none !important;
 }
+.note-name-row {
+  height: 5vh;
+}

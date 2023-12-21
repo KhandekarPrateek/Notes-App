@@ -17,8 +17,7 @@ const TinyMceEditor = ({
         type="text"
         onChange={handleNoteNameChange}
         value={heading}
-        bsSize="lg"
-        className="note-name-heading mb-5 mt-1 "
+        className="note-name-heading mb-5 mt-1"
         spellcheck="false"
       />
       <Editor

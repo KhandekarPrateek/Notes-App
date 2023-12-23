@@ -1,12 +1,11 @@
-import React, { useContext, useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
+import { useState, useContext } from "react";
 import { GiNotebook } from "react-icons/gi";
 import { PiSignOut } from "react-icons/pi";
 import { VscAccount } from "react-icons/vsc";
-import { FiEdit3 } from "react-icons/fi";
-import { BsLayoutSidebar } from "react-icons/bs";
 
 import {
+  Container,
   Collapse,
   Navbar,
   NavbarToggler,
@@ -14,19 +13,13 @@ import {
   NavItem,
   NavLink,
   NavbarText,
-  Col,
-  Container,
-  Row,
 } from "reactstrap";
 import { useLocation } from "react-router";
+import { UserContext } from "../../context/context";
 import { useNavigate } from "react-router-dom";
-import { ThemeContext } from "../../utils/ThemeContext";
-import { FaMoon, FaSun } from "react-icons/fa";
-const NavigationBar = ({
-  openNoteContainer,
-  createNewNote,
-  togglePageSizeChange,
-}) => {
+
+const NavigationBar = () => {
+  // const { currentUser } = useContext(UserContext);
   const [Data, setParsedData] = useState(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -34,85 +27,79 @@ const NavigationBar = ({
   const toggle = () => setIsOpen(!isOpen);
   const location = useLocation();
   const navigate = useNavigate();
-
+  // useEffect(() => {
+  //   localStorage.setItem(
+  //     "displayNameFromStorage",
+  //     JSON.stringify(currentUser.displayName)
+  //   );
+  // }, [currentUser.displayName]);
+  // useEffect(() => {
+  //   currentUser &&
+  //     currentUser.displayName &&
+  //     localStorage.setItem(
+  //       "displayNameFromStorage",
+  //       JSON.stringify(currentUser.displayName)
+  //     );
+  //
+  // }, []);
   useEffect(() => {
     const storedData = localStorage.getItem("userInfo");
     const parsedData = JSON.parse(storedData);
     setParsedData(parsedData);
   }, []);
 
+  console.log(Data, "data");
   const routeToDashboard = () => {
-    navigate(`/dashboard/${Data}`);
+    console.log(Data, "dashboardData");
+    // navigate(`/dashboard/${currentUser.displayName}`);
+    navigate(`/dashboard/${Data.displayName}`);
   };
   const routeToProfile = () => {
-    navigate(`/profile/${Data}`);
+    console.log(Data, "dataProfile");
+
+    // // navigate(`/profile/${currentUser.displayName}`);
+    navigate(`/profile/${Data.displayName}`);
   };
-  const [{ isDark }, toggleTheme] = useContext(ThemeContext);
+
   return (
-    <Container fluid>
-      <Row>
-        <Col className="border-bottom dashboard-border">
-          <Navbar expand="md" className="navbar-rules">
-            {location.pathname === `/profile/${Data}` && (
-              <>
-                <GiNotebook
+    <>
+      <Container fluid>
+        <Navbar color="dark" light expand="md" dark>
+          <GiNotebook
+            size={35}
+            className="mx-3 text-light cursor-pointer navbar-icon"
+            onClick={routeToDashboard}
+          />
+          <NavbarToggler onClick={toggle} />
+          {location.pathname === `/dashboard/${Data?.displayName}` ? (
+            <NavbarText>
+              <h5>Note name</h5>
+            </NavbarText>
+          ) : (
+            <NavbarText>
+              <h5>Go to Dashboard</h5>
+            </NavbarText>
+          )}
+
+          <Collapse isOpen={isOpen} navbar className="navbar-text">
+            <Nav className="ml-auto " navbar>
+              <NavItem>
+                <VscAccount
                   size={35}
-                  className="mx-3 text-light  icon-cursor"
-                  onClick={routeToDashboard}
+                  className="mt-2 text-light navbar-icon"
+                  onClick={routeToProfile}
                 />
-                <NavbarText>
-                  <h5>Go to dashboard</h5>
-                </NavbarText>
-              </>
-            )}
-
-            <NavbarToggler onClick={toggle} />
-
-            {location.pathname !== `/profile/${Data}` && (
-              <div className="d-flex">
-                <div className="border-end">
-                  <FiEdit3
-                    onClick={createNewNote}
-                    size={35}
-                    className="icon-cursor"
-                  />
-                </div>
-                <BsLayoutSidebar
-                  size={35}
-                  className="ms-2 icon-cursor"
-                  onClick={() => togglePageSizeChange(openNoteContainer)}
-                />
-              </div>
-            )}
-
-            <Collapse isOpen={isOpen} navbar className="navbar-text">
-              <Nav className="ml-auto " navbar>
-                <NavItem>
-                  <div
-                    onClick={toggleTheme}
-                    className="m-2 text-light icon-cursor"
-                  >
-                    {!isDark ? <FaMoon size={35} /> : <FaSun size={35} />}
-                  </div>
-                </NavItem>
-                <NavItem>
-                  <VscAccount
-                    size={35}
-                    className="mt-2 text-light icon-cursor"
-                    onClick={routeToProfile}
-                  />
-                </NavItem>
-                <NavItem>
-                  <NavLink href="/signin">
-                    <PiSignOut size={35} className="mx-3 icon-cursor" />
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </Collapse>
-          </Navbar>
-        </Col>
-      </Row>
-    </Container>
+              </NavItem>
+              <NavItem>
+                <NavLink href="/signin">
+                  <PiSignOut size={35} className="mx-3 navbar-icon" />
+                </NavLink>
+              </NavItem>
+            </Nav>
+          </Collapse>
+        </Navbar>
+      </Container>
+    </>
   );
 };
 

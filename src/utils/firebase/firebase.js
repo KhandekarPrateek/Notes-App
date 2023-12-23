@@ -1,6 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import {
   getAuth,
   signInWithPopup,
@@ -16,7 +14,6 @@ import {
   // retrive documents form inside our firestore database
   getDoc,
   setDoc,
-  updateDoc,
   // allows us to get and set documnets data
 } from "firebase/firestore";
 // allows us to get firestore database into our web app
@@ -106,59 +103,9 @@ export const createNewPassword = (newPassword) => {
   const user = auth.currentUser;
   updatePassword(user, newPassword)
     .then(() => {
-      toast.success("password updated", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      alert("password updated");
     })
     .catch((error) => {
       console.log(error.code, "error");
-      toast.error("Needs a fresh login to change password", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
     });
-};
-
-export const handleUID = () => {
-  const author = getAuth();
-  try {
-    localStorage.setItem("uid", author.currentUser.uid);
-  } catch (error) {
-    console.log(error, "error");
-  }
-};
-
-export const createFirbaseNote = async (note) => {
-  const userUID = localStorage.getItem("uid");
-
-  const docRef = doc(db, "users", userUID);
-
-  const userNote = {
-    note,
-  };
-  updateDoc(docRef, userNote)
-    .then((docRef) => {
-      console.log(
-        "A New Document Field has been added to an existing document"
-      );
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-
-export const fetchFirebaseNote = async () => {
-  const userUID = localStorage.getItem("uid");
-  const db = getFirestore(app);
-  const docRef = doc(db, "users", userUID);
-  try {
-    const docSnapshot = await getDoc(docRef);
-    if (docSnapshot.exists()) {
-      const data = docSnapshot.data();
-      return data;
-    } else {
-      console.log("No such document!");
-    }
-  } catch (error) {
-    console.error("Error getting document:", error);
-  }
 };

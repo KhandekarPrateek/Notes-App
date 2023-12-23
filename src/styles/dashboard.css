@@ -4,29 +4,6 @@
 .navbar-text {
   justify-content: end;
 }
-
-.icon-cursor {
+.navbar-icon {
   cursor: pointer;
 }
-.note-name-heading {
-  outline: none !important;
-  border: none !important;
-  font-size: 2rem !important;
-}
-
-.form-control:focus {
-  box-shadow: none !important;
-}
-.note-name {
-  overflow: hidden;
-  word-wrap: break-word;
-}
-.tox-tinymce {
-  border: none !important;
-}
-.note-name-row {
-  height: 6vh;
-}
-
-
-

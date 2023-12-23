@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useState } from "react";
 import {
   createAuthUserWithEmailAndPassword,
@@ -16,8 +16,6 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router";
 import displaySignIn from "../../../assets/displaySignIn.png";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 const SignUp = () => {
   const defaultFormField = {
     Name: "",
@@ -41,9 +39,7 @@ const SignUp = () => {
     event.preventDefault();
 
     if (setPassword !== ConfirmPassword) {
-      toast.error("passwords donot match", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      alert("passwords donot match");
       return;
     }
     try {
@@ -52,16 +48,10 @@ const SignUp = () => {
         setPassword
       );
       await createUserDocumentFromUserAuth(user, { Name });
-      toast.success("Sign Up successful", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      routeTosignIn();
       clearFormFields();
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        toast.warning("cannot create account with same email!!", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
+        alert("cannot create account with same email!!");
       } else {
         console.log(error, "user creation unsucessful");
       }
@@ -71,7 +61,6 @@ const SignUp = () => {
   const routeTosignIn = () => {
     navigate("/signin");
   };
-
   return (
     <Container className="container-signin" fluid>
       <Row className="h-100 w-100">

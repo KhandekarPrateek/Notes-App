@@ -4,6 +4,7 @@
 .navbar-text {
   justify-content: end;
 }
+
 .icon-cursor {
   cursor: pointer;
 }
@@ -26,3 +27,6 @@
 .note-name-row {
   height: 6vh;
 }
+
+
+

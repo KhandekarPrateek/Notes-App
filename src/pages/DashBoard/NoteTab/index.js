@@ -3,7 +3,20 @@ import { CgTrash } from "react-icons/cg";
 import { GrUpdate } from "react-icons/gr";
 import { Row } from "reactstrap";
 
-const NoteTab = ({ noteArray, openNoteBody, updateNote, removeNote }) => {
+const NoteTab = ({
+  noteArray,
+  openNoteBody,
+  updateNote,
+  removeNote,
+  isDark,
+}) => {
+  // ced9f2
+  const [bg, setBg] = useState([]);
+  // const [divIndex,setDivIndex]=useState()
+  const noteHighlightDark = {
+    background: "#ced9f2",
+  };
+
   return (
     <div className="profile-container">
       <Row className="h-100 border-end g-0 vstack gap-0 dashboard-border">
@@ -12,10 +25,15 @@ const NoteTab = ({ noteArray, openNoteBody, updateNote, removeNote }) => {
           return (
             <>
               {noteHeader && (
-                <div className="note-name-row border-bottom dashboard-border header-hover">
-                  <div className="justify-content-between d-flex ">
+                <div
+                  className="note-name-row border-bottom dashboard-border header-hover"
+                  // onClick={() => {
+                  //   noteNameHighlight(index);
+                  // }}
+                >
+                  <div className="justify-content-between d-flex align-items-center h-100 ">
                     <h5
-                      className="icon-cursor note-name text-truncate "
+                      className="icon-cursor note-name text-truncate p-5 "
                       onClick={() => {
                         openNoteBody(index);
                       }}

@@ -31,3 +31,6 @@ body {
 .header-hover:hover {
   background-color: #f6f7f7;
 }
+.highlighted-note-name {
+  background-color: #ced9f2;
+}

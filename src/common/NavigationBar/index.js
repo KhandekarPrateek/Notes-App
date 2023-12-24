@@ -21,7 +21,7 @@ import {
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../utils/ThemeContext";
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaRegMoon, FaRegSun } from "react-icons/fa";
 const NavigationBar = ({
   openNoteContainer,
   createNewNote,
@@ -92,7 +92,7 @@ const NavigationBar = ({
                     onClick={toggleTheme}
                     className="m-2 text-light icon-cursor"
                   >
-                    {!isDark ? <FaMoon size={35} /> : <FaSun size={35} />}
+                    {!isDark ? <FaRegMoon size={35} /> : <FaRegSun size={35} />}
                   </div>
                 </NavItem>
                 <NavItem>

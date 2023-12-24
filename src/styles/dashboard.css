@@ -27,6 +27,6 @@
 .note-name-row {
   height: 6vh;
 }
-
-
-
+.pin-icon {
+  position: absolute;
+}

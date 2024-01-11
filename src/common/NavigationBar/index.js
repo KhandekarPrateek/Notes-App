@@ -110,12 +110,9 @@ const NavigationBar = ({
                   <div
                     onClick={toggleTheme}
                     className="m-2 text-light icon-cursor"
+                    id="darkmode"
                   >
-                    {!isDark ? (
-                      <FaRegMoon size={35} id="darkmode" />
-                    ) : (
-                      <FaRegSun size={35} id="darkmode" />
-                    )}
+                    {!isDark ? <FaRegMoon size={35} /> : <FaRegSun size={35} />}
                   </div>
                   <NavbarTooltip
                     placement="bottom"

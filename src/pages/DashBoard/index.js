@@ -211,6 +211,7 @@ const Notes = () => {
                   removeNote={removeNote}
                   updateNote={updateNote}
                   isDark={isDark}
+                  setNote={setNote}
                 />
               </Col>
               <Col sm={9} className="justify-content-end ">

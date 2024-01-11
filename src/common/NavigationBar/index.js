@@ -22,6 +22,7 @@ import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../utils/ThemeContext";
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
+import NavbarTooltip from "../NavbarToolTip";
 const NavigationBar = ({
   openNoteContainer,
   createNewNote,
@@ -59,6 +60,12 @@ const NavigationBar = ({
                   size={35}
                   className="mx-3 text-light  icon-cursor"
                   onClick={routeToDashboard}
+                  id="dashboard"
+                />
+                <NavbarTooltip
+                  placement="bottom"
+                  target="dashboard"
+                  content="Go to dashboard"
                 />
                 <NavbarText>
                   <h5>Go to dashboard</h5>
@@ -75,12 +82,24 @@ const NavigationBar = ({
                     onClick={createNewNote}
                     size={35}
                     className="icon-cursor"
+                    id="newNote"
+                  />
+                  <NavbarTooltip
+                    placement="bottom"
+                    target="newNote"
+                    content="Create New Note"
                   />
                 </div>
                 <BsLayoutSidebar
                   size={35}
                   className="ms-2 icon-cursor"
                   onClick={() => togglePageSizeChange(openNoteContainer)}
+                  id="openNoteSidePanel"
+                />
+                <NavbarTooltip
+                  placement="bottom"
+                  target="openNoteSidePanel"
+                  content="Toggle Focus Mode"
                 />
               </div>
             )}
@@ -92,20 +111,46 @@ const NavigationBar = ({
                     onClick={toggleTheme}
                     className="m-2 text-light icon-cursor"
                   >
-                    {!isDark ? <FaRegMoon size={35} /> : <FaRegSun size={35} />}
+                    {!isDark ? (
+                      <FaRegMoon size={35} id="darkmode" />
+                    ) : (
+                      <FaRegSun size={35} id="darkmode" />
+                    )}
                   </div>
+                  <NavbarTooltip
+                    placement="bottom"
+                    target="darkmode"
+                    content={`${
+                      !isDark ? "Switch to Dark Mode" : "Switch to Light Mode"
+                    }`}
+                  />
                 </NavItem>
                 <NavItem>
                   <VscAccount
                     size={35}
                     className="mt-2 text-light icon-cursor"
                     onClick={routeToProfile}
+                    id="profile"
+                  />
+                  <NavbarTooltip
+                    placement="bottom"
+                    target="profile"
+                    content="Profile Section"
                   />
                 </NavItem>
                 <NavItem>
                   <NavLink href="/signin">
-                    <PiSignOut size={35} className="mx-3 icon-cursor" />
+                    <PiSignOut
+                      size={35}
+                      className="mx-3 icon-cursor"
+                      id="logout"
+                    />
                   </NavLink>
+                  <NavbarTooltip
+                    placement="bottom"
+                    target="logout"
+                    content="logout"
+                  />
                 </NavItem>
               </Nav>
             </Collapse>

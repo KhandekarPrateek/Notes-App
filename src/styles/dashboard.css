@@ -30,3 +30,7 @@
 .pin-icon {
   position: absolute;
 }
+.search-box {
+  outline: none !important;
+  border: none !important;
+}

@@ -73,60 +73,67 @@ const NoteTab = ({
     <div className="profile-container">
       <Row className="h-100 border-end g-0 vstack gap-0 dashboard-border">
         <SearchBox setSearchTerm={setSearchTerm} />
-        {filterNote.map((e, index) => {
-          const { noteHeader } = e;
-          return (
-            <>
-              {noteHeader && (
-                <div className="note-name-row border-bottom dashboard-border header-hover">
-                  <div
-                    className={`justify-content-between d-flex align-items-center h-100 ${
-                      isHighlighted[index] ? "highlighted-note-name" : ""
-                    }`}
-                    onMouseEnter={() => HandlePinVisible(index)}
-                    onMouseLeave={() => HandlePinInVisible(index)}
-                    onClick={() => {
-                      handleNoteClickProperties(index);
-                    }}
-                  >
-                    <>
-                      <div
-                        className="pin-icon icon-cursor "
-                        // onClick={() => {
-                        //   HandlePinNote(index);
-                        // }}
-                      >
-                        {isPinVisible[index] && (
-                          <MdOutlinePushPin
-                            size={20}
-                            className="justify-content-end d-flex"
-                          />
-                        )}
+        {filterNote.length === 0 ? (
+          <div className="d-flex align-items-center justify-content-center text-secondary h-75">
+            <h3>No Results</h3>
+          </div>
+        ) : (
+          filterNote.map((e, index) => {
+            const { noteHeader } = e;
+            return (
+              <>
+                {noteHeader && (
+                  <div className="note-name-row border-bottom dashboard-border header-hover">
+                    <div
+                      className={`justify-content-between d-flex align-items-center h-100 ${
+                        isHighlighted[index] ? "highlighted-note-name" : ""
+                      }`}
+                      onMouseEnter={() => HandlePinVisible(index)}
+                      onMouseLeave={() => HandlePinInVisible(index)}
+                      onClick={() => {
+                        handleNoteClickProperties(index);
+                      }}
+                    >
+                      {/* handle note nlick is opening note but its also opening when note delelted */}
+                      <>
+                        <div
+                          className="pin-icon icon-cursor "
+                          // onClick={() => {
+                          //   HandlePinNote(index);
+                          // }}
+                        >
+                          {isPinVisible[index] && (
+                            <MdOutlinePushPin
+                              size={20}
+                              className="justify-content-end d-flex"
+                            />
+                          )}
+                        </div>
+                        <h5 className="icon-cursor note-name text-truncate px-5  ">
+                          {e.noteHeader}
+                        </h5>
+                      </>
+                      <div className="justify-content-end d-flex">
+                        <GrUpdate
+                          className="icon-cursor mx-2"
+                          onClick={() => {
+                            updateNote(index);
+                          }}
+                        />
+                        <CgTrash
+                          className="icon-cursor"
+                          onClick={() => {
+                            removeNote(index);
+                          }}
+                        />
                       </div>
-                      <h5 className="icon-cursor note-name text-truncate px-5  ">
-                        {e.noteHeader}
-                      </h5>
-                    </>
-                    <div className="justify-content-end d-flex">
-                      <GrUpdate
-                        className="icon-cursor mx-2"
-                        onClick={() => {
-                          updateNote(index);
-                        }}
-                      />
-                      <CgTrash
-                        className="icon-cursor"
-                        onClick={() => {
-                          removeNote(index);
-                        }}
-                      />
                     </div>
                   </div>
-                </div>
-              )}
-            </>
-          );
-        })}
+                )}
+              </>
+            );
+          })
+        )}
       </Row>
     </div>
   );

@@ -13,7 +13,6 @@ import {
   Nav,
   NavItem,
   NavLink,
-  NavbarText,
   Col,
   Container,
   Row,
@@ -21,7 +20,8 @@ import {
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../../utils/ThemeContext";
-import { FaRegMoon, FaRegSun } from "react-icons/fa";
+import { IoSunnyOutline, IoMoonOutline } from "react-icons/io5";
+
 import NavbarTooltip from "../NavbarToolTip";
 const NavigationBar = ({
   openNoteContainer,
@@ -67,9 +67,6 @@ const NavigationBar = ({
                   target="dashboard"
                   content="Go to dashboard"
                 />
-                <NavbarText>
-                  <h5>Go to dashboard</h5>
-                </NavbarText>
               </>
             )}
 
@@ -112,7 +109,11 @@ const NavigationBar = ({
                     className="m-2 text-light icon-cursor"
                     id="darkmode"
                   >
-                    {!isDark ? <FaRegMoon size={35} /> : <FaRegSun size={35} />}
+                    {!isDark ? (
+                      <IoMoonOutline size={35} />
+                    ) : (
+                      <IoSunnyOutline size={35} />
+                    )}
                   </div>
                   <NavbarTooltip
                     placement="bottom"

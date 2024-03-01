@@ -4,6 +4,7 @@ import { GrUpdate } from "react-icons/gr";
 import { Row } from "reactstrap";
 import { MdOutlinePushPin } from "react-icons/md";
 import SearchBox from "../SearchBox";
+import NavbarTooltip from "../../../common/NavbarToolTip";
 
 const NoteTab = ({
   noteArray,
@@ -39,22 +40,7 @@ const NoteTab = ({
     openNoteBody(index);
     HandleIsHighlighted(index);
   };
-  //this code is buggy comment it and solve later date
-  // const HandlePinNote = (index) => {
-  //   const tempNoteArray = [...noteArray];
-  //   for (let i = index; i > 0; i--) {
-  //     let temp = tempNoteArray[i];
-  //     tempNoteArray[i] = tempNoteArray[i - 1];
-  //     tempNoteArray[i - 1] = temp;
-  //   }
-  //   const newIsHighlighted = new Array(noteArray.length).fill(false);
-  //   newIsHighlighted[0] = true;
-  //   setIsHighlighted(newIsHighlighted);
-  //   console.log(isHighlighted, "ishiglighted in the pin");
 
-  //   setNote(tempNoteArray);
-  // };
-  //till here
   const searchBox = () => {
     if (searchTerm) {
       setFilterNote(
@@ -96,12 +82,7 @@ const NoteTab = ({
                     >
                       {/* handle note nlick is opening note but its also opening when note delelted */}
                       <>
-                        <div
-                          className="pin-icon icon-cursor "
-                          // onClick={() => {
-                          //   HandlePinNote(index);
-                          // }}
-                        >
+                        <div className="pin-icon icon-cursor ">
                           {isPinVisible[index] && (
                             <MdOutlinePushPin
                               size={20}
@@ -120,12 +101,20 @@ const NoteTab = ({
                             updateNote(index);
                           }}
                         />
-                        <CgTrash
+                        <div
+                          id="delete"
                           className="icon-cursor"
                           onClick={() => {
                             removeNote(index);
                           }}
-                        />
+                        >
+                          <CgTrash />
+                          <NavbarTooltip
+                            placement="bottom"
+                            target="delete"
+                            content="Delete Note"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

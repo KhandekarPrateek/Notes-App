@@ -121,7 +121,7 @@ const Notes = () => {
 
   const BlogPost = () => {
     let flag = null;
-    note.map((element) => {
+    note.forEach((element) => {
       const { noteUUId, noteHeader, noteContent } = element;
       if (noteUUId === noteUUID) {
         setHeading(noteHeader);

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Col, Row } from "reactstrap";
+import { Col, Row, Spinner } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
 import { useNavigate, useParams } from "react-router";
@@ -13,6 +13,7 @@ import { ThemeContext } from "../../utils/ThemeContext";
 import { toast } from "react-toastify";
 import TinyMceEditor from "./Editor";
 import NoteTab from "./NoteTab";
+import Loader from "../../common/Loader";
 const Notes = () => {
   useEffect(() => {
     handleUID();
@@ -31,11 +32,13 @@ const Notes = () => {
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
   const [onClickUUID, setOnClickUUID] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const fetchingData = async () => {
     const fetchedData = await fetchFirebaseNote();
     if ("note" in fetchedData) {
       setNote(fetchedData.note);
+      setLoading(false);
     } else {
       return;
     }
@@ -180,18 +183,60 @@ const Notes = () => {
   };
   return (
     <div className="profile-container">
-      {openNoteContainer ? (
+      {loading ? (
         <>
-          <Row className="d-flex justify-content-end g-0 ">
-            <Col
-              sm={3}
-              className="justify-content-center d-flex align-items-center border-bottom border-end g-0 dashboard-border "
-            >
-              <div className="navbar-rules">
-                <h3>All notes</h3>
-              </div>
-            </Col>
-            <Col sm={9}>
+          <Loader />
+        </>
+      ) : (
+        <>
+          {openNoteContainer ? (
+            <>
+              <Row className="d-flex justify-content-end g-0 ">
+                <Col
+                  sm={3}
+                  className="justify-content-center d-flex align-items-center border-bottom border-end g-0 dashboard-border "
+                >
+                  <div className="navbar-rules">
+                    <h3>All notes</h3>
+                  </div>
+                </Col>
+                <Col sm={9}>
+                  <div>
+                    <NavigationBar
+                      UUID={noteUUID}
+                      navNoteName={heading}
+                      openNoteContainer={openNoteContainer}
+                      createNewNote={createNewNote}
+                      togglePageSizeChange={togglePageSizeChange}
+                    />
+                  </div>
+                </Col>
+
+                <Row className="g-0">
+                  <Col sm={3}>
+                    <NoteTab
+                      noteArray={note}
+                      openNoteBody={openNoteBody}
+                      removeNote={removeNote}
+                      updateNote={updateNote}
+                      isDark={isDark}
+                      setNote={setNote}
+                    />
+                  </Col>
+                  <Col sm={9} className="justify-content-end ">
+                    <TinyMceEditor
+                      handleNoteNameChange={handleNoteNameChange}
+                      heading={heading}
+                      iframeFunc={iframeFunc}
+                      content={content}
+                      handleEditorChange={handleEditorChange}
+                    />
+                  </Col>
+                </Row>
+              </Row>
+            </>
+          ) : (
+            <>
               <div>
                 <NavigationBar
                   UUID={noteUUID}
@@ -201,49 +246,15 @@ const Notes = () => {
                   togglePageSizeChange={togglePageSizeChange}
                 />
               </div>
-            </Col>
-
-            <Row className="g-0">
-              <Col sm={3}>
-                <NoteTab
-                  noteArray={note}
-                  openNoteBody={openNoteBody}
-                  removeNote={removeNote}
-                  updateNote={updateNote}
-                  isDark={isDark}
-                  setNote={setNote}
-                />
-              </Col>
-              <Col sm={9} className="justify-content-end ">
-                <TinyMceEditor
-                  handleNoteNameChange={handleNoteNameChange}
-                  heading={heading}
-                  iframeFunc={iframeFunc}
-                  content={content}
-                  handleEditorChange={handleEditorChange}
-                />
-              </Col>
-            </Row>
-          </Row>
-        </>
-      ) : (
-        <>
-          <div>
-            <NavigationBar
-              UUID={noteUUID}
-              navNoteName={heading}
-              openNoteContainer={openNoteContainer}
-              createNewNote={createNewNote}
-              togglePageSizeChange={togglePageSizeChange}
-            />
-          </div>
-          <TinyMceEditor
-            handleNoteNameChange={handleNoteNameChange}
-            heading={heading}
-            iframeFunc={iframeFunc}
-            content={content}
-            handleEditorChange={handleEditorChange}
-          />
+              <TinyMceEditor
+                handleNoteNameChange={handleNoteNameChange}
+                heading={heading}
+                iframeFunc={iframeFunc}
+                content={content}
+                handleEditorChange={handleEditorChange}
+              />
+            </>
+          )}
         </>
       )}
     </div>

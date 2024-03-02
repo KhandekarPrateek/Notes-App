@@ -5,10 +5,11 @@ import SignUp from "./pages/OnboardPage/SignUp";
 import DashBoard from "./pages/DashBoard";
 import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ThemeContext } from "./utils/ThemeContext";
 import { Helmet } from "react-helmet";
 import NoteTab from "./pages/DashBoard/NoteTab";
+import CheckInternet from "./common/CheckInternet";
 function App() {
   const [{ isDark }] = useContext(ThemeContext);
 
@@ -23,6 +24,7 @@ function App() {
 
       <div>
         <ToastContainer />
+        <CheckInternet />
         <Routes>
           <Route path="/">
             <Route path="signin" element={<SignIn />} />

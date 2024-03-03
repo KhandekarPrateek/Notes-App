@@ -1,12 +1,25 @@
 import React, { useState, useEffect } from "react";
 import InternetMssg from "./InternetMssg";
+import { useLocation, useNavigate } from "react-router";
 
-const CheckInternet = () => {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+const CheckInternet = ({ isOnlineRef }) => {
+  const [isOnline, setIsOnline] = useState(isOnlineRef.current);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const handleOnlineStatus = () => {
-      setIsOnline(navigator.onLine);
+      const online = navigator.onLine;
+      setIsOnline(online);
+      if (online) {
+        const storedData = localStorage.getItem("userInfo");
+        const parsedData = JSON.parse(storedData);
+        const isOnDashboard = location.pathname.startsWith("/dashboard");
+        if (parsedData && !isOnDashboard) {
+          navigate(`/dashboard/${parsedData}`);
+        }
+      }
     };
 
     window.addEventListener("online", handleOnlineStatus);
@@ -16,14 +29,15 @@ const CheckInternet = () => {
       window.removeEventListener("online", handleOnlineStatus);
       window.removeEventListener("offline", handleOnlineStatus);
     };
-  }, []);
-
+  }, [isOnlineRef, navigate, location.pathname]);
   return (
     <div>
       {isOnline ? (
-        <InternetMssg online={true} message="Connected To Internet" />
+        <>
+          <InternetMssg online={true} />
+        </>
       ) : (
-        <InternetMssg online={false} message="No Internet available" />
+        <InternetMssg online={false} />
       )}
     </div>
   );

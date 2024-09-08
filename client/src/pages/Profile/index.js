@@ -3,7 +3,6 @@ import { Col, Form, Row, FormGroup, Label, Input, Button } from "reactstrap";
 import profile from "../../assets/profile.png";
 import NavigationBar from "../../common/NavigationBar";
 import UserInfo from "./UserInfo";
-import { createNewPassword } from "../../utils/firebase/firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../common/Loader";
@@ -35,7 +34,7 @@ const Profile = () => {
 
   const handlePasswordChange = () => {
     if (setPassword === confirmPassword) {
-      createNewPassword(setPassword);
+      // createNewPassword(setPassword);
     } else {
       toast.error(" passwords donot match", {
         position: toast.POSITION.TOP_RIGHT,
@@ -60,7 +59,7 @@ const Profile = () => {
               {" "}
               <Row>
                 <h3 className="my-5">Your Profile</h3>
-                <UserInfo info={userName} title={"Name"} />
+                <UserInfo info={userName}  />
                 <UserInfo info={userEmail} title={"Email"} />
 
                 <Form>

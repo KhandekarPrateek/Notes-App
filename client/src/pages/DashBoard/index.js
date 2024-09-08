@@ -3,21 +3,18 @@ import { Col, Row } from "reactstrap";
 import { nanoid } from "nanoid";
 import NavigationBar from "../../common/NavigationBar";
 import { useNavigate, useParams } from "react-router";
-import {
-  auth,
-  fetchFirebaseNote,
-  handleUID,
-} from "../../utils/firebase/firebase";
-import { createFirbaseNote } from "../../utils/firebase/firebase";
+
 import { ThemeContext } from "../../utils/ThemeContext";
 import { toast } from "react-toastify";
 import TinyMceEditor from "./Editor";
 import NoteTab from "./NoteTab";
 import Loader from "../../common/Loader";
+
 const Notes = () => {
-  useEffect(() => {
-    handleUID();
-  }, [auth]);
+  // Removed handleUID and auth since they are not defined
+  // useEffect(() => {
+  //   handleUID();
+  // }, [auth]);
 
   const defaultNote = {
     noteUUId: nanoid(),
@@ -32,20 +29,7 @@ const Notes = () => {
   const [heading, setHeading] = useState("");
   const [content, setContent] = useState("");
   const [onClickUUID, setOnClickUUID] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  const fetchingData = async () => {
-    const fetchedData = await fetchFirebaseNote();
-    if ("note" in fetchedData) {
-      setNote(fetchedData.note);
-      setLoading(false);
-    } else {
-      return;
-    }
-  };
-  useEffect(() => {
-    fetchingData();
-  }, []);
+  const [loading, setLoading] = useState(false);
 
   const createNewNote = () => {
     const newNote = {
@@ -61,7 +45,7 @@ const Notes = () => {
     const result = [...note, newNote].filter((element) => {
       return element.noteHeader !== "";
     });
-    createFirbaseNote(result);
+    // Removed createFirbaseNote call
     toast.success("Note added", {
       position: toast.POSITION.TOP_RIGHT,
     });
@@ -82,19 +66,18 @@ const Notes = () => {
   const removeNote = (num) => {
     setHeading("");
     setContent("");
-    createFirbaseNote(note);
-    const abc = note.filter((ele, index) => {
-      return index !== num;
-    });
-    setNote(abc);
-    createFirbaseNote(abc);
-    if (note.length > 0) {
+    // Removed createFirbaseNote call
+    const updatedNotes = note.filter((_, index) => index !== num);
+    setNote(updatedNotes);
+    // Removed createFirbaseNote call
+    if (updatedNotes.length > 0) {
       navigateToNoteName(0);
     }
     toast.success("Note deleted", {
       position: toast.POSITION.TOP_RIGHT,
     });
   };
+
   const navigate = useNavigate();
   const navigateToNoteName = (num) => {
     const storedData = localStorage.getItem("userInfo");
@@ -107,11 +90,11 @@ const Notes = () => {
   };
 
   const updateNote = (index) => {
-    note[index].noteContent = content;
-    note[index].noteHeader = heading;
-    const abc = note;
-    setNote(abc);
-    createFirbaseNote(abc);
+    const updatedNote = { ...note[index], noteContent: content, noteHeader: heading };
+    const updatedNotes = [...note];
+    updatedNotes[index] = updatedNote;
+    setNote(updatedNotes);
+    // Removed createFirbaseNote call
     toast.success("Note updated", {
       position: toast.POSITION.TOP_RIGHT,
     });
@@ -120,6 +103,7 @@ const Notes = () => {
   const handleEditorChange = (content) => {
     setContent(content);
   };
+
   const { noteUUID } = useParams();
 
   const BlogPost = () => {
@@ -139,12 +123,11 @@ const Notes = () => {
       }
     });
   };
-  useEffect(() => {
-    BlogPost();
-  }, []);
+
   useEffect(() => {
     BlogPost();
   }, [note, noteUUID]);
+
   const [{ isDark }] = useContext(ThemeContext);
   const foo = () => {
     if (document.querySelector("iframe")) {
@@ -159,6 +142,7 @@ const Notes = () => {
       iframe1.head.appendChild(styleTag);
     }
   };
+
   const tinyMceIframeFunc = () => {
     if (document.querySelector("iframe")) {
       const iframe = document.querySelector("iframe").contentWindow;
@@ -169,6 +153,7 @@ const Notes = () => {
       }
     }
   };
+
   const iframeFunc = () => {
     foo();
     tinyMceIframeFunc();
@@ -177,16 +162,16 @@ const Notes = () => {
   useEffect(() => {
     iframeFunc();
   }, [isDark]);
+
   const [openNoteContainer, setopenNoteContainer] = useState(true);
   const togglePageSizeChange = (oldopenNoteContainer) => {
     setopenNoteContainer(!oldopenNoteContainer);
   };
+
   return (
     <div className="profile-container">
       {loading ? (
-        <>
-          <Loader />
-        </>
+        <Loader />
       ) : (
         <>
           {openNoteContainer ? (
@@ -201,17 +186,14 @@ const Notes = () => {
                   </div>
                 </Col>
                 <Col sm={9}>
-                  <div>
-                    <NavigationBar
-                      UUID={noteUUID}
-                      navNoteName={heading}
-                      openNoteContainer={openNoteContainer}
-                      createNewNote={createNewNote}
-                      togglePageSizeChange={togglePageSizeChange}
-                    />
-                  </div>
+                  <NavigationBar
+                    UUID={noteUUID}
+                    navNoteName={heading}
+                    openNoteContainer={openNoteContainer}
+                    createNewNote={createNewNote}
+                    togglePageSizeChange={togglePageSizeChange}
+                  />
                 </Col>
-
                 <Row className="g-0">
                   <Col sm={3}>
                     <NoteTab
@@ -237,15 +219,13 @@ const Notes = () => {
             </>
           ) : (
             <>
-              <div>
-                <NavigationBar
-                  UUID={noteUUID}
-                  navNoteName={heading}
-                  openNoteContainer={openNoteContainer}
-                  createNewNote={createNewNote}
-                  togglePageSizeChange={togglePageSizeChange}
-                />
-              </div>
+              <NavigationBar
+                UUID={noteUUID}
+                navNoteName={heading}
+                openNoteContainer={openNoteContainer}
+                createNewNote={createNewNote}
+                togglePageSizeChange={togglePageSizeChange}
+              />
               <TinyMceEditor
                 handleNoteNameChange={handleNoteNameChange}
                 heading={heading}

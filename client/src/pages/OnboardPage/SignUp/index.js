@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import { useState } from "react";
-import {
-  createAuthUserWithEmailAndPassword,
-  createUserDocumentFromUserAuth,
-} from "../../../utils/firebase/firebase";
+
 import {
   Col,
   Container,
@@ -37,36 +34,7 @@ const SignUp = () => {
     const { name, value } = event.target;
     setFormField({ ...formField, [name]: value });
   };
-  const handleFormSubmit = async (event) => {
-    event.preventDefault();
-
-    if (setPassword !== ConfirmPassword) {
-      toast.error("passwords donot match", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      return;
-    }
-    try {
-      const { user } = await createAuthUserWithEmailAndPassword(
-        email,
-        setPassword
-      );
-      await createUserDocumentFromUserAuth(user, { Name });
-      toast.success("Sign Up successful", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
-      routeTosignIn();
-      clearFormFields();
-    } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        toast.warning("cannot create account with same email!!", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      } else {
-        console.log(error, "user creation unsucessful");
-      }
-    }
-  };
+  
   const navigate = useNavigate();
   const routeTosignIn = () => {
     navigate("/signin");
@@ -145,7 +113,7 @@ const SignUp = () => {
                 <Row>
                   <Button
                     className="button-signin mt-4"
-                    onClick={handleFormSubmit}
+                    // onClick={handleFormSubmit}
                   >
                     Create Account
                   </Button>

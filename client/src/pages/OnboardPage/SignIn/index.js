@@ -12,12 +12,7 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import displaySignIn from "../../../assets/displaySignIn.png";
-import {
-  signInwithGooglePopup,
-  createUserDocumentFromUserAuth,
-  signInUserWithEmailAndPassword,
-  getData,
-} from "../../../utils/firebase/firebase";
+
 import { ThemeContext } from "../../../utils/ThemeContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -48,64 +43,12 @@ const SignIn = () => {
     emailVerified ? routeToDashboard(displayName) : console.log("error");
   };
 
-  const logWithGoogleUser = async () => {
-    try {
-      const { user } = await signInwithGooglePopup();
-
-      await createUserDocumentFromUserAuth(user);
-
-      localStorage.setItem("userInfo", JSON.stringify(user.displayName));
-      localStorage.setItem("userEmail", JSON.stringify(user.email));
-
-      navigateToDashboard(user);
-    } catch (error) {
-      if (error.code === "auth/popup-closed-by-user") {
-        toast.warning("google popup faiilure", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-    }
-  };
+  
   const clearFormFields = () => {
     setFormFieldsSignIn(defaultFormFields);
   };
 
-  const handleEmailAndPasswordSignIn = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await signInUserWithEmailAndPassword(email, password);
-
-      const response2 = await getData(response.user.uid);
-      const response3 = {
-        ...response2,
-        displayName: response2.Name,
-      };
-
-      if (response3.displayName) {
-        localStorage.setItem("userInfo", JSON.stringify(response3.displayName));
-        localStorage.setItem("userEmail", JSON.stringify(response3.email));
-
-        routeToDashboard(response3.displayName);
-      } else {
-        console.log("Cant access your data");
-      }
-
-      clearFormFields();
-    } catch (error) {
-      if (error.code === "auth/invalid-login-credentials") {
-        toast.error("enter correct password", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-      if (error.code === "auth/popup-closed-by-user") {
-        toast.warning("Sign in via gmail or sign up otherwise", {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-      }
-    }
-  };
-
+  
   return (
     <>
       <Container className="container-signin" fluid>
@@ -149,7 +92,7 @@ const SignIn = () => {
                     <Button
                       type="button"
                       className="button-signin mt-4"
-                      onClick={logWithGoogleUser}
+                     
                     >
                       Google sign in
                     </Button>
@@ -160,7 +103,7 @@ const SignIn = () => {
                     <Button
                       className="button-signup mt-4"
                       outline
-                      onClick={handleEmailAndPasswordSignIn}
+                      // onClick={handleEmailAndPasswordSignIn}
                     >
                       {" "}
                       Sign-in

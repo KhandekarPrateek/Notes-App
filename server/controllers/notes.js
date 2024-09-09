@@ -1,7 +1,7 @@
 const Note=require('../models/Notes')
 const {NotFoundError,BadRequestError}=require('../errors')
 const createNote=async(req,res)=>{
-   req.body.createdBy=req.user.userId
+    req.body.createdBy=req.user.userId
    const note=await Note.create(req.body)
    res.status(200).json({note})
 }

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev":"nodemon index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -24,6 +24,7 @@
     "mongodb": "^6.8.1",
     "mongoose": "^8.6.1",
     "nodemon": "^3.1.4",
+    "vercel": "^37.4.0",
     "xss-clean": "^0.1.4"
   }
 }

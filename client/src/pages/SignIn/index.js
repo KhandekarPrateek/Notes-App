@@ -11,9 +11,9 @@ import {
   Button,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
-import displaySignIn from "../../../assets/displaySignIn.png";
+import displaySignIn from "../../assets/displaySignIn.png";
 
-import { ThemeContext } from "../../../utils/ThemeContext";
+import { ThemeContext } from "../../utils/ThemeContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const SignIn = () => {

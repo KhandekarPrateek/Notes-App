@@ -12,19 +12,18 @@ import {
   Button,
 } from "reactstrap";
 import { useNavigate } from "react-router";
-import displaySignIn from "../../../assets/displaySignIn.png";
+import displaySignIn from "../../assets/displaySignIn.png";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const SignUp = () => {
   const defaultFormField = {
     Name: "",
-    surname: "",
     email: "",
     setPassword: "",
     ConfirmPassword: "",
   };
   const [formField, setFormField] = useState(defaultFormField);
-  const { Name, surname, email, setPassword, ConfirmPassword } = formField;
+  const { Name,  email, setPassword, ConfirmPassword } = formField;
   // NOtes:the value and state are circular i.e if value changes state changes and state change tells what to display
 
   const clearFormFields = () => {
@@ -33,6 +32,40 @@ const SignUp = () => {
   const handleFormFieldChange = (event) => {
     const { name, value } = event.target;
     setFormField({ ...formField, [name]: value });
+  };
+  const handleFormSubmit = async () => {
+    if (setPassword !== ConfirmPassword) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+  
+    try {
+      const response = await fetch("https://notes-app-gilt-chi.vercel.app/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formField.Name,
+          email: formField.email,
+          password: formField.setPassword,
+        }),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+  
+      const data = await response.json();
+      toast.success("Registration successful!");
+      console.log(data);
+  
+      clearFormFields();
+      navigate("/signin");
+    } catch (error) {
+      toast.error("Registration failed!");
+      console.error("Error:", error);
+    }
   };
   
   const navigate = useNavigate();
@@ -65,16 +98,7 @@ const SignUp = () => {
                     onChange={handleFormFieldChange}
                   />
                 </FormGroup>
-                <FormGroup className="m-5">
-                  <Label>Surname</Label>
-                  <Input
-                    id="surname"
-                    name="surname"
-                    placeholder="Surname"
-                    value={surname}
-                    onChange={handleFormFieldChange}
-                  />
-                </FormGroup>
+               
                 <FormGroup className="m-5">
                   <Label for="exampleEmail">Email</Label>
                   <Input
@@ -113,7 +137,7 @@ const SignUp = () => {
                 <Row>
                   <Button
                     className="button-signin mt-4"
-                    // onClick={handleFormSubmit}
+                    onClick={handleFormSubmit}
                   >
                     Create Account
                   </Button>

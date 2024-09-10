@@ -11,10 +11,7 @@ import NoteTab from "./NoteTab";
 import Loader from "../../common/Loader";
 
 const Notes = () => {
-  // Removed handleUID and auth since they are not defined
-  // useEffect(() => {
-  //   handleUID();
-  // }, [auth]);
+ 
 
   const defaultNote = {
     noteUUId: nanoid(),
@@ -31,26 +28,7 @@ const Notes = () => {
   const [onClickUUID, setOnClickUUID] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const createNewNote = () => {
-    const newNote = {
-      ...defaultNote,
-      noteId: note.length + 1,
-      noteUUId: nanoid(),
-      noteHeader: heading,
-      noteContent: content,
-    };
-    setNote([...note, newNote]);
-    setHeading("");
-    setContent("");
-    const result = [...note, newNote].filter((element) => {
-      return element.noteHeader !== "";
-    });
-    // Removed createFirbaseNote call
-    toast.success("Note added", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
-
+ 
   const handleNoteNameChange = (event) => {
     setHeading(event.target.value);
   };
@@ -63,21 +41,7 @@ const Notes = () => {
     navigateToNoteName(num);
   };
 
-  const removeNote = (num) => {
-    setHeading("");
-    setContent("");
-    // Removed createFirbaseNote call
-    const updatedNotes = note.filter((_, index) => index !== num);
-    setNote(updatedNotes);
-    // Removed createFirbaseNote call
-    if (updatedNotes.length > 0) {
-      navigateToNoteName(0);
-    }
-    toast.success("Note deleted", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
-
+ 
   const navigate = useNavigate();
   const navigateToNoteName = (num) => {
     const storedData = localStorage.getItem("userInfo");
@@ -89,16 +53,6 @@ const Notes = () => {
     }
   };
 
-  const updateNote = (index) => {
-    const updatedNote = { ...note[index], noteContent: content, noteHeader: heading };
-    const updatedNotes = [...note];
-    updatedNotes[index] = updatedNote;
-    setNote(updatedNotes);
-    // Removed createFirbaseNote call
-    toast.success("Note updated", {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-  };
 
   const handleEditorChange = (content) => {
     setContent(content);
@@ -190,7 +144,7 @@ const Notes = () => {
                     UUID={noteUUID}
                     navNoteName={heading}
                     openNoteContainer={openNoteContainer}
-                    createNewNote={createNewNote}
+                    // createNewNote={createNewNote}
                     togglePageSizeChange={togglePageSizeChange}
                   />
                 </Col>
@@ -199,8 +153,8 @@ const Notes = () => {
                     <NoteTab
                       noteArray={note}
                       openNoteBody={openNoteBody}
-                      removeNote={removeNote}
-                      updateNote={updateNote}
+                      // removeNote={removeNote}
+                      // updateNote={updateNote}
                       isDark={isDark}
                       setNote={setNote}
                     />
@@ -223,7 +177,7 @@ const Notes = () => {
                 UUID={noteUUID}
                 navNoteName={heading}
                 openNoteContainer={openNoteContainer}
-                createNewNote={createNewNote}
+                // createNewNote={createNewNote}
                 togglePageSizeChange={togglePageSizeChange}
               />
               <TinyMceEditor

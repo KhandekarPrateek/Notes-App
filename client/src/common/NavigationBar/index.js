@@ -37,9 +37,9 @@ const NavigationBar = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedData = localStorage.getItem("userInfo");
-    const parsedData = JSON.parse(storedData);
-    setParsedData(parsedData);
+    const storedData = localStorage.getItem("name");
+    
+    setParsedData(storedData);
   }, []);
 
   const routeToDashboard = () => {

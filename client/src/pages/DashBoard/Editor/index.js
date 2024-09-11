@@ -6,9 +6,11 @@ const TinyMceEditor = ({
   handleNoteNameChange,
   heading,
   iframeFunc,
-  content,
+  newContent,
   handleEditorChange,
 }) => {
+  console.log(newContent,'content from editor');
+  
   return (
     <div>
       <Input
@@ -44,7 +46,7 @@ const TinyMceEditor = ({
               Promise.reject("See docs to implement AI Assistant")
             ),
         }}
-        value={content}
+        value={newContent}
         onEditorChange={handleEditorChange}
       />
     </div>

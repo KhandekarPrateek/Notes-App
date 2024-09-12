@@ -48,6 +48,14 @@ const NavigationBar = ({
   const routeToProfile = () => {
     navigate(`/profile/${Data}`);
   };
+  const handleLogout = () => {
+    localStorage.removeItem("theme");
+    localStorage.removeItem("name");
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    navigate("/signin");
+  };
+
   const [{ isDark }, toggleTheme] = useContext(ThemeContext);
   return (
     <Container fluid>
@@ -137,11 +145,12 @@ const NavigationBar = ({
                   />
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/signin">
+                  <NavLink >
                     <PiSignOut
                       size={35}
                       className="mx-3 icon-cursor"
                       id="logout"
+                      onClick={handleLogout}
                     />
                   </NavLink>
                   <NavbarTooltip

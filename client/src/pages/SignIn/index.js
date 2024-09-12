@@ -31,17 +31,9 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const routeTosignUp = () => {
-    navigate("/signup");
+    navigate("/");
   };
 
-  // const routeToDashboard = (dashboardName) => {
-  //   navigate(`/dashboard/${dashboardName}`);
-  // };
-
-  // const navigateToDashboard = (user) => {
-  //   const { emailVerified, displayName } = user;
-  //   emailVerified ? routeToDashboard(displayName) : console.log("error");
-  // };
 
   
  

@@ -29,7 +29,7 @@ const login=async(req,res)=>{
         throw new UnauthenticatedError(' incorrect passowrd')
     }
     const token=user.createJwt()
-    res.status(200).json({user:{name:user.name},token})
+    res.status(200).json({user:{name:user.name,email:user.email},token})
 }
 
 module.exports={

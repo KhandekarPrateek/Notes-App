@@ -7,7 +7,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "../../common/Loader";
 const Profile = () => {
- 
+  const [name, setName] = useState('');  
+  const [email, setEmail] = useState(''); 
+
+  useEffect(() => {
+    setName(localStorage.getItem('name'));  
+    setEmail(localStorage.getItem('email')); 
+  }, []); 
   const [loading, setLoading] = useState(false);
   const defaultPassword = {
     setPassword: "",
@@ -76,8 +82,8 @@ const Profile = () => {
               {" "}
               <Row>
                 <h3 className="my-5">Your Profile</h3>
-                <UserInfo info="Name" title={"Name"} />
-                <UserInfo info="email" title={"Email"} />
+                <UserInfo info={name} title={"Name"} />
+                <UserInfo info={email} title={"Email"} />
 
                 <Form>
                   <h3 className="my-5">Change password</h3>

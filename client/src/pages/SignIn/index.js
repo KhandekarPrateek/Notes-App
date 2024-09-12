@@ -65,6 +65,8 @@ const SignIn = () => {
       }
       localStorage.setItem('token', data.token);
       localStorage.setItem('name', data.user.name);
+      localStorage.setItem('email', data.user.email);
+
 
       toast.success("Login successful!");
       console.log(data)

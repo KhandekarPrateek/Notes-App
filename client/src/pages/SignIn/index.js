@@ -11,9 +11,9 @@ import {
   Button,
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
-import displaySignIn from "../../../assets/displaySignIn.png";
+import displaySignIn from "../../assets/displaySignIn.png";
 
-import { ThemeContext } from "../../../utils/ThemeContext";
+import { ThemeContext } from "../../utils/ThemeContext";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const SignIn = () => {
@@ -22,7 +22,7 @@ const SignIn = () => {
     password: "",
   };
   const [formFieldsSignIn, setFormFieldsSignIn] = useState(defaultFormFields);
-  const { email, password } = formFieldsSignIn;
+ 
   const handleChangeSignIn = (event) => {
     const { name, value } = event.target;
     setFormFieldsSignIn({ ...formFieldsSignIn, [name]: value });
@@ -34,21 +34,46 @@ const SignIn = () => {
     navigate("/signup");
   };
 
-  const routeToDashboard = (dashboardName) => {
-    navigate(`/dashboard/${dashboardName}`);
-  };
+  // const routeToDashboard = (dashboardName) => {
+  //   navigate(`/dashboard/${dashboardName}`);
+  // };
 
-  const navigateToDashboard = (user) => {
-    const { emailVerified, displayName } = user;
-    emailVerified ? routeToDashboard(displayName) : console.log("error");
-  };
-
-  
-  const clearFormFields = () => {
-    setFormFieldsSignIn(defaultFormFields);
-  };
+  // const navigateToDashboard = (user) => {
+  //   const { emailVerified, displayName } = user;
+  //   emailVerified ? routeToDashboard(displayName) : console.log("error");
+  // };
 
   
+ 
+  const handleSignIn = async () => {
+  
+    try {
+      const response = await fetch("https://notes-app-gilt-chi.vercel.app/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formFieldsSignIn.email,
+          password: formFieldsSignIn.password,
+        }),
+      });
+  
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.msg);
+      }
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('name', data.user.name);
+
+      toast.success("Login successful!");
+      console.log(data)
+      navigate(`/dashboard/${data.user.name}`);
+    } catch (error) {
+      toast.error(error.message);
+      console.error("Error:", error);
+    }
+  };
   return (
     <>
       <Container className="container-signin" fluid>
@@ -88,22 +113,14 @@ const SignIn = () => {
                   </h6>
                 </Form>
                 <div className=" justify-content-center d-flex">
-                  <Row>
-                    <Button
-                      type="button"
-                      className="button-signin mt-4"
-                     
-                    >
-                      Google sign in
-                    </Button>
-                  </Row>
+                  
                 </div>
                 <Row>
                   <div className=" justify-content-center d-flex">
                     <Button
                       className="button-signup mt-4"
                       outline
-                      // onClick={handleEmailAndPasswordSignIn}
+                      onClick={handleSignIn}
                     >
                       {" "}
                       Sign-in

@@ -33,7 +33,7 @@ const NoteTab = ({
     const IsHighlighted = new Array(noteArray.length).fill(false);
     IsHighlighted[index] = true;
     setIsHighlighted(IsHighlighted);
-    console.log(IsHighlighted, "ishiglighted in the func");
+    // console.log(IsHighlighted, "ishiglighted in the func");
   };
 
   const handleNoteClickProperties = (index) => {
@@ -45,7 +45,7 @@ const NoteTab = ({
     if (searchTerm) {
       setFilterNote(
         noteArray.filter((item) =>
-          item.noteHeader.toLowerCase().includes(searchTerm.toLowerCase())
+          item.heading.toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
     } else {
@@ -65,10 +65,10 @@ const NoteTab = ({
           </div>
         ) : (
           filterNote.map((e, index) => {
-            const { noteHeader } = e;
+            const { heading } = e;
             return (
               <>
-                {noteHeader && (
+                {heading && (
                   <div className="note-name-row border-bottom dashboard-border header-hover">
                     <div
                       className={`justify-content-between d-flex align-items-center h-100 ${
@@ -77,7 +77,7 @@ const NoteTab = ({
                       onMouseEnter={() => HandlePinVisible(index)}
                       onMouseLeave={() => HandlePinInVisible(index)}
                       onClick={() => {
-                        handleNoteClickProperties(index);
+                        handleNoteClickProperties(e.id);
                       }}
                     >
                       {/* handle note nlick is opening note but its also opening when note delelted */}
@@ -91,21 +91,24 @@ const NoteTab = ({
                           )}
                         </div>
                         <h5 className="icon-cursor note-name text-truncate px-5  ">
-                          {e.noteHeader}
+                          {e.heading}
                         </h5>
                       </>
                       <div className="justify-content-end d-flex">
                         <GrUpdate
                           className="icon-cursor mx-2"
-                          onClick={() => {
-                            updateNote(index);
+                          onClick={(event) => {
+                            event.stopPropagation(); // Prevents opening the note body
+
+                            updateNote(e.id);
                           }}
                         />
                         <div
                           id="delete"
                           className="icon-cursor"
-                          onClick={() => {
-                            removeNote(index);
+                          onClick={(event) => {
+                            event.stopPropagation(); // Prevents opening the note body
+                            removeNote(e.id);
                           }}
                         >
                           <CgTrash />

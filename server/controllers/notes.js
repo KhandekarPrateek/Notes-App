@@ -1,4 +1,5 @@
 const Note=require('../models/Notes')
+const User = require('../models/user');
 const {NotFoundError,BadRequestError}=require('../errors')
 const createNote=async(req,res)=>{
     req.body.createdBy=req.user.userId
@@ -55,7 +56,27 @@ const getAllNote=async(req,res)=>{
     const notes=await Note.find({createdBy:req.user.userId}).sort('createdAt')
     res.status(200).json({notes,count:notes.length})
 }
-
+const updatePassword = async (req, res) => {
+    const userId = req.user.userId; // Extract userId from authenticated token
+    const { newPassword } = req.body;
+  
+    // Ensure the new password is provided
+    if (!newPassword) {
+      throw new BadRequestError('Please provide a new password');
+    }
+  
+    // Fetch the user from the database
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new UnauthenticatedError('User not found');
+    }
+  
+    // Update the user's password (bcrypt will hash it in the pre-save hook)
+    user.password = newPassword;
+    await user.save();
+  
+    res.status(200).json({ msg: 'Password updated successfully' });
+  };
 module.exports={
-    getAllNote,getNote,deleteNote,updateNote,createNote
+    getAllNote,getNote,deleteNote,updateNote,createNote,updatePassword
 }

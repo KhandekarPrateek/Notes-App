@@ -21,15 +21,43 @@ const Profile = () => {
     setPasswordField({ ...passwordField, [name]: value });
   };
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async () => {
     if (setPassword === confirmPassword) {
-      // createNewPassword(setPassword);
+      setLoading(true);
+      try {
+        const response = await fetch('https://notes-app-gilt-chi.vercel.app/notes', {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`, 
+          },
+          body: JSON.stringify({ newPassword: setPassword }),
+        });
+
+        if (response.ok) {
+          toast.success("Password updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        } else {
+          const errorData = await response.json();
+          toast.error(`Error: ${errorData.message || 'Failed to update password'}`, {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        }
+      } catch (error) {
+        toast.error("An unexpected error occurred", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      } finally {
+        setLoading(false);
+      }
     } else {
-      toast.error(" passwords donot match", {
+      toast.error("Passwords do not match", {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
   };
+
 
   return (
     <>
@@ -48,7 +76,7 @@ const Profile = () => {
               {" "}
               <Row>
                 <h3 className="my-5">Your Profile</h3>
-                <UserInfo info="Name"  />
+                <UserInfo info="Name" title={"Name"} />
                 <UserInfo info="email" title={"Email"} />
 
                 <Form>
